@@ -62,7 +62,7 @@ namespace reco {
         : energy_(0), correctedEnergy_(-1.0), correctedEnergyUncertainty_(-1.0), algoID_(algoID), flags_(0) {}
 
     CaloCluster(double energy, const math::XYZPoint& position, const CaloID& caloID)
-        : energy_(energy),
+        : energy_(static_cast<float>(energy)),
           correctedEnergy_(-1.0),
           correctedEnergyUncertainty_(-1.0),
           position_(position),
@@ -75,7 +75,7 @@ namespace reco {
 
     /// constructor from values
     CaloCluster(double energy, const math::XYZPoint& position)
-        : energy_(energy),
+        : energy_(static_cast<float>(energy)),
           correctedEnergy_(-1.0),
           correctedEnergyUncertainty_(-1.0),
           position_(position),
@@ -84,7 +84,7 @@ namespace reco {
 
     CaloCluster(
         double energy, const math::XYZPoint& position, const CaloID& caloID, const AlgoID& algoID, uint32_t flags = 0)
-        : energy_(energy),
+        : energy_(static_cast<float>(energy)),
           correctedEnergy_(-1.0),
           correctedEnergyUncertainty_(-1.0),
           position_(position),
@@ -100,7 +100,7 @@ namespace reco {
                 const AlgoId algoId,
                 const DetId seedId = DetId(0),
                 uint32_t flags = 0)
-        : energy_(energy),
+        : energy_(static_cast<float>(energy)),
           correctedEnergy_(-1.0),
           correctedEnergyUncertainty_(-1.0),
           position_(position),
@@ -119,7 +119,7 @@ namespace reco {
                 const std::vector<DetId>& usedHits,
                 const AlgoId algoId,
                 uint32_t flags = 0)
-        : energy_(energy),
+        : energy_(static_cast<float>(energy)),
           correctedEnergy_(-1.0),
           correctedEnergyUncertainty_(-1.0),
           position_(position),
@@ -133,8 +133,8 @@ namespace reco {
     /// destructor
     virtual ~CaloCluster() {}
 
-    void setEnergy(double energy) { energy_ = energy; }
-    void setCorrectedEnergy(double cenergy) { correctedEnergy_ = cenergy; }
+    void setEnergy(double energy) { energy_ = static_cast<float>(energy); }
+    void setCorrectedEnergy(double cenergy) { correctedEnergy_ = static_cast<float>(cenergy); }
     void setCorrectedEnergyUncertainty(float energyerr) { correctedEnergyUncertainty_ = energyerr; }
 
     void setPosition(const math::XYZPoint& p) { position_ = p; }
@@ -146,8 +146,8 @@ namespace reco {
     void setSeed(const DetId& id) { seedId_ = id; }
 
     /// cluster energy
-    double energy() const { return energy_; }
-    double correctedEnergy() const { return correctedEnergy_; }
+    double energy() const { return static_cast<double>(energy_); }
+    double correctedEnergy() const { return static_cast<double>(correctedEnergy_); }
     float correctedEnergyUncertainty() const { return correctedEnergyUncertainty_; }
 
     /// cluster centroid position
@@ -220,8 +220,8 @@ namespace reco {
 
   protected:
     /// cluster energy
-    double energy_;
-    double correctedEnergy_;
+    float energy_;
+    float correctedEnergy_;
     float correctedEnergyUncertainty_;
 
     /// cluster centroid position
