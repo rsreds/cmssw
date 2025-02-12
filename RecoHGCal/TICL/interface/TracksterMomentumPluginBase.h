@@ -3,7 +3,7 @@
 
 #include "DataFormats/Candidate/interface/Candidate.h"
 #include "DataFormats/VertexReco/interface/Vertex.h"
-#include "DataFormats/CaloRecHit/interface/CaloCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "DataFormats/HGCalReco/interface/Trackster.h"
 #include "DataFormats/HGCalReco/interface/TICLCandidate.h"
 #include "FWCore/Framework/interface/ConsumesCollector.h"

@@ -17,7 +17,7 @@ public:
                               const std::vector<TICLSeedingRegion> &regions,
                               int nEtaBins,
                               int nPhiBins,
-                              const std::vector<reco::CaloCluster> &layerClusters,
+                              const std::vector<reco::CaloClusterFloat> &layerClusters,
                               const std::vector<float> &mask,
                               const edm::ValueMap<std::pair<float, float>> &layerClustersTime,
                               int deltaIEta,
@@ -40,7 +40,7 @@ public:
 
   bool areOverlappingOnSiblingLayers(int innerIdx,
                                      int outerIdx,
-                                     const std::vector<reco::CaloCluster> &layerClusters,
+                                     const std::vector<reco::CaloClusterFloat> &layerClusters,
                                      float maxRSquared);
 
   std::vector<HGCDoublet> &getAllDoublets() { return allDoublets_; }

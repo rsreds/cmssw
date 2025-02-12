@@ -39,6 +39,33 @@ void ClusterTools::getEvent(const edm::Event& ev) {
 
 void ClusterTools::getEventSetup(const edm::EventSetup& es) { rhtools_.setGeometry(es.getData(caloGeometryToken_)); }
 
+float ClusterTools::getClusterHadronFraction(const reco::CaloClusterFloat& clus) const {
+  float energy = 0.f, energyHad = 0.f;
+  const auto& hits = clus.hitsAndFractions();
+  const auto& rhmanager = *rechitManager_;
+  for (const auto& hit : hits) {
+    const auto& id = hit.first;
+    const float fraction = hit.second;
+    auto hitIter = hitMap_->find(id.rawId());
+    if (hitIter == hitMap_->end()) {
+      continue;
+    }
+    unsigned int rechitIndex = hitIter->second;
+    float hitEnergy = rhmanager[rechitIndex].energy() * fraction;
+    energy += hitEnergy;
+    if (id.det() == DetId::HGCalHSi || id.det() == DetId::HGCalHSc ||
+        (id.det() == DetId::Forward && id.subdetId() == HGCHEF) ||
+        (id.det() == DetId::Hcal && id.subdetId() == HcalEndcap)) {
+      energyHad += hitEnergy;
+    }
+  }
+  float hadronicFraction = -1.f;
+  if (energy > 0.f) {
+    hadronicFraction = energyHad / energy;
+  }
+  return hadronicFraction;
+}
+
 float ClusterTools::getClusterHadronFraction(const reco::CaloCluster& clus) const {
   float energy = 0.f, energyHad = 0.f;
   const auto& hits = clus.hitsAndFractions();
@@ -65,6 +92,7 @@ float ClusterTools::getClusterHadronFraction(const reco::CaloCluster& clus) cons
   }
   return hadronicFraction;
 }
+
 
 math::XYZPoint ClusterTools::getMultiClusterPosition(const reco::HGCalMultiCluster& clu) const {
   if (clu.clusters().empty())
@@ -105,14 +133,14 @@ double ClusterTools::getMultiClusterEnergy(const reco::HGCalMultiCluster& clu) c
   return acc;
 }
 
-bool ClusterTools::getWidths(const reco::CaloCluster& clus,
+bool ClusterTools::getWidths(const reco::CaloClusterFloat& clus,
                              double& sigmaetaeta,
                              double& sigmaphiphi,
                              double& sigmaetaetal,
                              double& sigmaphiphil) const {
   if (getLayer(clus.hitsAndFractions()[0].first) > (int)rhtools_.lastLayerEE())
     return false;
-  const math::XYZPoint& position(clus.position());
+  const math::XYZPointF& position(clus.position());
   unsigned nhit = clus.hitsAndFractions().size();
 
   sigmaetaeta = 0.;

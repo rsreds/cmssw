@@ -116,7 +116,7 @@ void HGCalImagingAlgo::makeClusters() {
   }
 }
 
-std::vector<reco::BasicCluster> HGCalImagingAlgo::getClusters(bool doSharing) {
+std::vector<reco::CaloClusterFloat> HGCalImagingAlgo::getClusters(bool doSharing) {
   reco::CaloID caloID = reco::CaloID::DET_HGCAL_ENDCAP;
   std::vector<std::pair<DetId, float>> thisCluster;
   for (auto &clsOnLayer : layerClustersPerLayer_) {

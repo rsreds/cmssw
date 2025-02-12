@@ -29,6 +29,7 @@ Note that all tracksters are translated to reco::CaloCluster, even those that ar
 #include "DataFormats/EgammaReco/interface/ElectronSeedFwd.h"
 #include "DataFormats/HGCalReco/interface/Trackster.h"
 #include "DataFormats/Math/interface/deltaPhi.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 
 using cms::Ort::ONNXRuntime;
 
@@ -47,7 +48,7 @@ private:
   edm::EDGetTokenT<ticl::TracksterCollection> ticlSuperClustersToken_;
   edm::EDGetTokenT<std::vector<std::vector<unsigned int>>> superClusterLinksToken_;
   edm::EDGetTokenT<ticl::TracksterCollection> ticlTrackstersEMToken_;
-  edm::EDGetTokenT<reco::CaloClusterCollection> layerClustersToken_;
+  edm::EDGetTokenT<reco::CaloClusterFloatCollection> layerClustersToken_;
   float superclusterEtThreshold_;
   bool enableRegression_;
 };
@@ -59,7 +60,7 @@ EGammaSuperclusterProducer::EGammaSuperclusterProducer(const edm::ParameterSet& 
                         "linkedTracksterIdToInputTracksterId",
                         ps.getParameter<edm::InputTag>("ticlSuperClusters").process()))),
       ticlTrackstersEMToken_(consumes<ticl::TracksterCollection>(ps.getParameter<edm::InputTag>("ticlTrackstersEM"))),
-      layerClustersToken_(consumes<reco::CaloClusterCollection>(ps.getParameter<edm::InputTag>("layerClusters"))),
+      layerClustersToken_(consumes<reco::CaloClusterFloatCollection>(ps.getParameter<edm::InputTag>("layerClusters"))),
       superclusterEtThreshold_(ps.getParameter<double>("superclusterEtThreshold")),
       enableRegression_(ps.getParameter<bool>("enableRegression")) {
   produces<reco::SuperClusterCollection>();

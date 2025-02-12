@@ -28,7 +28,7 @@ namespace ticl {
     // ---------- const member functions ---------------------
     /// Associate a LayerCluster to SimTracksters
     ticl::RecoToSimTracksterCollection associateRecoToSim(
-        const edm::Handle<reco::CaloClusterCollection> &cCCH,
+        const edm::Handle<reco::CaloClusterFloatCollection> &cCCH,
         const edm::Handle<ticl::TracksterCollection> &stCH,
         const edm::Handle<CaloParticleCollection> &cPCH,
         const ticl::RecoToSimCollection &lCToCPs,
@@ -39,7 +39,7 @@ namespace ticl {
 
     /// Associate a SimTrackster to LayerClusters
     ticl::SimTracksterToRecoCollection associateSimToReco(
-        const edm::Handle<reco::CaloClusterCollection> &cCCH,
+        const edm::Handle<reco::CaloClusterFloatCollection> &cCCH,
         const edm::Handle<ticl::TracksterCollection> &sTCH,
         const edm::Handle<CaloParticleCollection> &cPCH,
         const ticl::SimToRecoCollection &cpToLCs,

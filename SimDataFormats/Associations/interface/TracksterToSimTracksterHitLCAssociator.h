@@ -23,7 +23,7 @@ namespace ticl {
     ~TracksterToSimTracksterHitLCAssociator() = default;
 
     ticl::association_t makeConnections(const edm::Handle<ticl::TracksterCollection> &tCH,
-                                        const edm::Handle<reco::CaloClusterCollection> &lCCH,
+                                        const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
                                         const edm::Handle<SimClusterCollection> &sCCH,
                                         const edm::Handle<CaloParticleCollection> &cPCH,
                                         const edm::Handle<ticl::TracksterCollection> &sTCH) const {
@@ -31,7 +31,7 @@ namespace ticl {
     }
     /// Associate a Trackster to SimClusters
     ticl::RecoToSimCollectionSimTracksters associateRecoToSim(const edm::Handle<ticl::TracksterCollection> &tCH,
-                                                              const edm::Handle<reco::CaloClusterCollection> &lCCH,
+                                                              const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
                                                               const edm::Handle<SimClusterCollection> &sCCH,
                                                               const edm::Handle<CaloParticleCollection> &cPCH,
                                                               const edm::Handle<ticl::TracksterCollection> &sTCH) const {
@@ -40,7 +40,7 @@ namespace ticl {
 
     /// Associate a SimCluster to Tracksters
     ticl::SimToRecoCollectionSimTracksters associateSimToReco(const edm::Handle<ticl::TracksterCollection> &tCH,
-                                                              const edm::Handle<reco::CaloClusterCollection> &lCCH,
+                                                              const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
                                                               const edm::Handle<SimClusterCollection> &sCCH,
                                                               const edm::Handle<CaloParticleCollection> &cPCH,
                                                               const edm::Handle<ticl::TracksterCollection> &sTCH) const {

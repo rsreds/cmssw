@@ -51,21 +51,21 @@ public:
                                                      std::vector<const HGCRecHit *> &hits);
 
   ticl::association_t makeConnections(const edm::Handle<ticl::TracksterCollection> &tCH,
-                                      const edm::Handle<reco::CaloClusterCollection> &lCCH,
+                                      const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
                                       const edm::Handle<SimClusterCollection> &sCCH,
                                       const edm::Handle<CaloParticleCollection> &cPCH,
                                       const edm::Handle<ticl::TracksterCollection> &sTCH) const;
 
   ticl::RecoToSimCollectionSimTracksters associateRecoToSim(
       const edm::Handle<ticl::TracksterCollection> &tCH,
-      const edm::Handle<reco::CaloClusterCollection> &lCCH,
+      const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
       const edm::Handle<SimClusterCollection> &sCCH,
       const edm::Handle<CaloParticleCollection> &cPCH,
       const edm::Handle<ticl::TracksterCollection> &sTCH) const override;
 
   ticl::SimToRecoCollectionSimTracksters associateSimToReco(
       const edm::Handle<ticl::TracksterCollection> &tCH,
-      const edm::Handle<reco::CaloClusterCollection> &lCCH,
+      const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
       const edm::Handle<SimClusterCollection> &sCCH,
       const edm::Handle<CaloParticleCollection> &cPCH,
       const edm::Handle<ticl::TracksterCollection> &sTCH) const override;

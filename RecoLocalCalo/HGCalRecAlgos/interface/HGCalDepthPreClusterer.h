@@ -2,7 +2,7 @@
 #define RecoLocalCalo_HGCalRecAlgos_HGCalDepthPreClusterer
 
 #include "DataFormats/Math/interface/Point3D.h"
-#include "DataFormats/EgammaReco/interface/BasicCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "DataFormats/ParticleFlowReco/interface/HGCalMultiCluster.h"
 
 #include <list>
@@ -40,8 +40,8 @@ public:
     rhtools_.setGeometry(*geom);
   }
 
-  typedef std::vector<reco::BasicCluster> ClusterCollection;
-  //  typedef std::vector<reco::BasicCluster> MultiCluster;
+  typedef std::vector<reco::CaloClusterFloat> ClusterCollection;
+  //  typedef std::vector<reco::CaloClusterFloat> MultiCluster;
 
   std::vector<reco::HGCalMultiCluster> makePreClusters(const reco::HGCalMultiCluster::ClusterCollection&) const;
 

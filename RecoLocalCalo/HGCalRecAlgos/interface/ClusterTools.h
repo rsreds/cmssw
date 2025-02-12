@@ -7,7 +7,7 @@
 
 #include "RecoLocalCalo/HGCalRecAlgos/interface/RecHitTools.h"
 #include "DataFormats/HGCRecHit/interface/HGCRecHitCollections.h"
-#include "DataFormats/CaloRecHit/interface/CaloCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "DataFormats/ParticleFlowReco/interface/HGCalMultiCluster.h"
 #include "CommonTools/RecoAlgos/interface/MultiVectorManager.h"
 
@@ -36,6 +36,7 @@ namespace hgcal {
     void getEvent(const edm::Event &);
     void getEventSetup(const edm::EventSetup &);
 
+    float getClusterHadronFraction(const reco::CaloClusterFloat &) const;
     float getClusterHadronFraction(const reco::CaloCluster &) const;
 
     math::XYZPoint getMultiClusterPosition(const reco::HGCalMultiCluster &) const;
@@ -45,7 +46,7 @@ namespace hgcal {
     double getMultiClusterEnergy(const reco::HGCalMultiCluster &) const;
 
     // only for EE
-    bool getWidths(const reco::CaloCluster &clus,
+    bool getWidths(const reco::CaloClusterFloat &clus,
                    double &sigmaetaeta,
                    double &sigmaphiphi,
                    double &sigmaetaetalog,

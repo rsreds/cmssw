@@ -272,8 +272,8 @@ public:
   void bookTracksterSTSHistos(DQMStore::IBooker& ibook, Histograms& histograms, const validationType valType);
 
   void layerClusters_to_CaloParticles(const Histograms& histograms,
-                                      edm::Handle<reco::CaloClusterCollection> clusterHandle,
-                                      const reco::CaloClusterCollection& clusters,
+                                      edm::Handle<reco::CaloClusterFloatCollection> clusterHandle,
+                                      const reco::CaloClusterFloatCollection& clusters,
                                       edm::Handle<std::vector<CaloParticle>> caloParticleHandle,
                                       std::vector<CaloParticle> const& cP,
                                       std::vector<size_t> const& cPIndices,
@@ -285,8 +285,8 @@ public:
                                       MultiVectorManager<HGCRecHit> const& hits) const;
   void layerClusters_to_SimClusters(const Histograms& histograms,
                                     const int count,
-                                    edm::Handle<reco::CaloClusterCollection> clusterHandle,
-                                    const reco::CaloClusterCollection& clusters,
+                                    edm::Handle<reco::CaloClusterFloatCollection> clusterHandle,
+                                    const reco::CaloClusterFloatCollection& clusters,
                                     edm::Handle<std::vector<SimCluster>> simClusterHandle,
                                     std::vector<SimCluster> const& simClusters,
                                     std::vector<size_t> const& sCIndices,
@@ -317,8 +317,8 @@ public:
                                 MultiVectorManager<HGCRecHit> const& hits) const;
   void fill_generic_cluster_histos(const Histograms& histograms,
                                    const int count,
-                                   edm::Handle<reco::CaloClusterCollection> clusterHandle,
-                                   const reco::CaloClusterCollection& clusters,
+                                   edm::Handle<reco::CaloClusterFloatCollection> clusterHandle,
+                                   const reco::CaloClusterFloatCollection& clusters,
                                    edm::Handle<std::vector<CaloParticle>> caloParticleHandle,
                                    std::vector<CaloParticle> const& cP,
                                    std::vector<size_t> const& cPIndices,
@@ -336,8 +336,8 @@ public:
                               std::vector<int> thicknesses) const;
   void fill_simClusterAssociation_histos(const Histograms& histograms,
                                          const int count,
-                                         edm::Handle<reco::CaloClusterCollection> clusterHandle,
-                                         const reco::CaloClusterCollection& clusters,
+                                         edm::Handle<reco::CaloClusterFloatCollection> clusterHandle,
+                                         const reco::CaloClusterFloatCollection& clusters,
                                          edm::Handle<std::vector<SimCluster>> simClusterHandle,
                                          std::vector<SimCluster> const& simClusters,
                                          std::vector<size_t> const& sCIndices,
@@ -347,11 +347,11 @@ public:
                                          const ticl::RecoToSimCollectionWithSimClusters& recSimColl,
                                          const ticl::SimToRecoCollectionWithSimClusters& simRecColl,
                                          MultiVectorManager<HGCRecHit> const& hits) const;
-  void fill_cluster_histos(const Histograms& histograms, const int count, const reco::CaloCluster& cluster) const;
+  void fill_cluster_histos(const Histograms& histograms, const int count, const reco::CaloClusterFloat& cluster) const;
   void fill_trackster_histos(const Histograms& histograms,
                              const int count,
                              const ticl::TracksterCollection& tracksters,
-                             const reco::CaloClusterCollection& layerClusters,
+                             const reco::CaloClusterFloatCollection& layerClusters,
                              const ticl::TracksterCollection& simTSs,
                              const ticl::TracksterCollection& simTSs_fromCP,
                              const std::map<unsigned int, std::vector<unsigned int>>& cpToSc_SimTrackstersMap,
@@ -378,7 +378,7 @@ public:
 
   void setRecHitTools(std::shared_ptr<hgcal::RecHitTools> recHitTools);
 
-  DetId findmaxhit(const reco::CaloCluster& cluster,
+  DetId findmaxhit(const reco::CaloClusterFloat& cluster,
                    std::unordered_map<DetId, const unsigned int> const&,
                    MultiVectorManager<HGCRecHit> const& hits) const;
 

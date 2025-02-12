@@ -29,7 +29,7 @@ public:
   void produce(edm::Event&, const edm::EventSetup&) override;
 
 private:
-  edm::EDGetTokenT<std::vector<reco::CaloCluster>> clusters_token_;
+  edm::EDGetTokenT<std::vector<reco::CaloClusterFloat>> clusters_token_;
   edm::EDGetTokenT<std::vector<float>> clustersMask_token_;
   edm::ESGetToken<CaloGeometry, CaloGeometryRecord> caloGeometry_token_;
   std::string clusterFilter_;
@@ -41,7 +41,7 @@ private:
 DEFINE_FWK_MODULE(FilteredLayerClustersProducer);
 
 FilteredLayerClustersProducer::FilteredLayerClustersProducer(const edm::ParameterSet& ps) {
-  clusters_token_ = consumes<std::vector<reco::CaloCluster>>(ps.getParameter<edm::InputTag>("LayerClusters"));
+  clusters_token_ = consumes<std::vector<reco::CaloClusterFloat>>(ps.getParameter<edm::InputTag>("LayerClusters"));
   clustersMask_token_ = consumes<std::vector<float>>(ps.getParameter<edm::InputTag>("LayerClustersInputMask"));
   caloGeometry_token_ = esConsumes<CaloGeometry, CaloGeometryRecord, edm::Transition::BeginRun>();
   clusterFilter_ = ps.getParameter<std::string>("clusterFilter");
@@ -64,7 +64,7 @@ void FilteredLayerClustersProducer::fillDescriptions(edm::ConfigurationDescripti
   desc.add<std::string>("clusterFilter", "ClusterFilterByAlgoAndSize");
   desc.add<std::vector<int>>(
       "algo_number",
-      {reco::CaloCluster::hgcal_em, reco::CaloCluster::hgcal_had, reco::CaloCluster::hgcal_scintillator});  // 6,7,8
+      {reco::CaloClusterFloat::hgcal_em, reco::CaloClusterFloat::hgcal_had, reco::CaloClusterFloat::hgcal_scintillator});  // 6,7,8
   desc.add<int>("min_cluster_size", 0);
   desc.add<int>("max_cluster_size", 9999);
   desc.add<int>("min_layerId", 0);
@@ -73,7 +73,7 @@ void FilteredLayerClustersProducer::fillDescriptions(edm::ConfigurationDescripti
 }
 
 void FilteredLayerClustersProducer::produce(edm::Event& evt, const edm::EventSetup& es) {
-  edm::Handle<std::vector<reco::CaloCluster>> clusterHandle;
+  edm::Handle<std::vector<reco::CaloClusterFloat>> clusterHandle;
   edm::Handle<std::vector<float>> inputClustersMaskHandle;
   evt.getByToken(clusters_token_, clusterHandle);
   evt.getByToken(clustersMask_token_, inputClustersMaskHandle);

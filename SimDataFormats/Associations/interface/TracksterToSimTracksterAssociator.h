@@ -28,14 +28,14 @@ namespace ticl {
     // ---------- const member functions ---------------------
     /// Associate a Trackster to SimClusters
     ticl::RecoToSimCollectionSimTracksters associateRecoToSim(const edm::Handle<ticl::TracksterCollection> &tCH,
-                                                              const edm::Handle<reco::CaloClusterCollection> &lCCH,
+                                                              const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
                                                               const edm::Handle<ticl::TracksterCollection> &sTCH) const {
       return m_impl->associateRecoToSim(tCH, lCCH, sTCH);
     };
 
     /// Associate a SimCluster to Tracksters
     ticl::SimToRecoCollectionSimTracksters associateSimToReco(const edm::Handle<ticl::TracksterCollection> &tCH,
-                                                              const edm::Handle<reco::CaloClusterCollection> &lCCH,
+                                                              const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
                                                               const edm::Handle<ticl::TracksterCollection> &sTCH) const {
       return m_impl->associateSimToReco(tCH, lCCH, sTCH);
     }

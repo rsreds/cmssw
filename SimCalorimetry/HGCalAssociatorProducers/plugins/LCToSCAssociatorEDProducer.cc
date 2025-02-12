@@ -38,7 +38,7 @@ private:
   void produce(edm::StreamID, edm::Event &, const edm::EventSetup &) const override;
 
   edm::EDGetTokenT<SimClusterCollection> SCCollectionToken_;
-  edm::EDGetTokenT<reco::CaloClusterCollection> LCCollectionToken_;
+  edm::EDGetTokenT<reco::CaloClusterFloatCollection> LCCollectionToken_;
   edm::EDGetTokenT<ticl::LayerClusterToSimClusterAssociator> associatorToken_;
 };
 
@@ -47,7 +47,7 @@ LCToSCAssociatorEDProducer::LCToSCAssociatorEDProducer(const edm::ParameterSet &
   produces<ticl::RecoToSimCollectionWithSimClusters>();
 
   SCCollectionToken_ = consumes<SimClusterCollection>(pset.getParameter<edm::InputTag>("label_scl"));
-  LCCollectionToken_ = consumes<reco::CaloClusterCollection>(pset.getParameter<edm::InputTag>("label_lcl"));
+  LCCollectionToken_ = consumes<reco::CaloClusterFloatCollection>(pset.getParameter<edm::InputTag>("label_lcl"));
   associatorToken_ = consumes<ticl::LayerClusterToSimClusterAssociator>(pset.getParameter<edm::InputTag>("associator"));
 }
 
@@ -67,7 +67,7 @@ void LCToSCAssociatorEDProducer::produce(edm::StreamID, edm::Event &iEvent, cons
   Handle<SimClusterCollection> SCCollection;
   iEvent.getByToken(SCCollectionToken_, SCCollection);
 
-  Handle<reco::CaloClusterCollection> LCCollection;
+  Handle<reco::CaloClusterFloatCollection> LCCollection;
   iEvent.getByToken(LCCollectionToken_, LCCollection);
 
   // associate LC and SC

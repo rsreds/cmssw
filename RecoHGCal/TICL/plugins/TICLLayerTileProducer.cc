@@ -9,7 +9,7 @@
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "FWCore/Utilities/interface/ESGetToken.h"
 
-#include "DataFormats/CaloRecHit/interface/CaloCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "DataFormats/HGCalReco/interface/TICLLayerTile.h"
 
 #include "RecoLocalCalo/HGCalRecAlgos/interface/RecHitTools.h"
@@ -23,8 +23,8 @@ public:
   static void fillDescriptions(edm::ConfigurationDescriptions &descriptions);
 
 private:
-  edm::EDGetTokenT<std::vector<reco::CaloCluster>> clusters_token_;
-  edm::EDGetTokenT<std::vector<reco::CaloCluster>> clusters_HFNose_token_;
+  edm::EDGetTokenT<std::vector<reco::CaloClusterFloat>> clusters_token_;
+  edm::EDGetTokenT<std::vector<reco::CaloClusterFloat>> clusters_HFNose_token_;
   edm::ESGetToken<CaloGeometry, CaloGeometryRecord> geometry_token_;
   hgcal::RecHitTools rhtools_;
   std::string detector_;
@@ -39,10 +39,10 @@ TICLLayerTileProducer::TICLLayerTileProducer(const edm::ParameterSet &ps)
 
   if (doNose_) {
     clusters_HFNose_token_ =
-        consumes<std::vector<reco::CaloCluster>>(ps.getParameter<edm::InputTag>("layer_HFNose_clusters"));
+        consumes<std::vector<reco::CaloClusterFloat>>(ps.getParameter<edm::InputTag>("layer_HFNose_clusters"));
     produces<TICLLayerTilesHFNose>();
   } else {
-    clusters_token_ = consumes<std::vector<reco::CaloCluster>>(ps.getParameter<edm::InputTag>("layer_clusters"));
+    clusters_token_ = consumes<std::vector<reco::CaloClusterFloat>>(ps.getParameter<edm::InputTag>("layer_clusters"));
     produces<TICLLayerTiles>();
   }
 }
@@ -61,7 +61,7 @@ void TICLLayerTileProducer::produce(edm::Event &evt, const edm::EventSetup &) {
     result = std::make_unique<TICLLayerTiles>();
   }
 
-  edm::Handle<std::vector<reco::CaloCluster>> cluster_h;
+  edm::Handle<std::vector<reco::CaloClusterFloat>> cluster_h;
   if (doNose_)
     evt.getByToken(clusters_HFNose_token_, cluster_h);
   else

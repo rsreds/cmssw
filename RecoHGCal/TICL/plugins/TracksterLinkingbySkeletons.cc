@@ -138,7 +138,7 @@ std::array<ticl::Vector, 3> TracksterLinkingbySkeletons::findSkeletonNodes(
     const ticl::Trackster &trackster,
     float lower_percentage,
     float upper_percentage,
-    const std::vector<reco::CaloCluster> &layerClusters,
+    const std::vector<reco::CaloClusterFloat> &layerClusters,
     const hgcal::RecHitTools &rhtools) {
   auto const &vertices = trackster.vertices();
   auto const trackster_raw_energy = trackster.raw_energy();

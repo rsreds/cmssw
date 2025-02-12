@@ -12,16 +12,16 @@
 
 #include "DataFormats/Common/interface/Handle.h"
 #include "DataFormats/Common/interface/AssociationMap.h"
-#include "DataFormats/CaloRecHit/interface/CaloClusterFwd.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 
 #include "SimDataFormats/CaloAnalysis/interface/SimClusterFwd.h"
 
 namespace ticl {
 
   typedef edm::AssociationMap<
-      edm::OneToManyWithQualityGeneric<SimClusterCollection, reco::CaloClusterCollection, std::pair<float, float>>>
+      edm::OneToManyWithQualityGeneric<SimClusterCollection, reco::CaloClusterFloatCollection, std::pair<float, float>>>
       SimToRecoCollectionWithSimClusters;
-  typedef edm::AssociationMap<edm::OneToManyWithQualityGeneric<reco::CaloClusterCollection, SimClusterCollection, float>>
+  typedef edm::AssociationMap<edm::OneToManyWithQualityGeneric<reco::CaloClusterFloatCollection, SimClusterCollection, float>>
       RecoToSimCollectionWithSimClusters;
 
   class LayerClusterToSimClusterAssociatorBaseImpl {
@@ -33,11 +33,11 @@ namespace ticl {
 
     /// Associate a LayerCluster to SimClusters
     virtual ticl::RecoToSimCollectionWithSimClusters associateRecoToSim(
-        const edm::Handle<reco::CaloClusterCollection> &cCH, const edm::Handle<SimClusterCollection> &sCCH) const;
+        const edm::Handle<reco::CaloClusterFloatCollection> &cCH, const edm::Handle<SimClusterCollection> &sCCH) const;
 
     /// Associate a SimCluster to LayerClusters
     virtual ticl::SimToRecoCollectionWithSimClusters associateSimToReco(
-        const edm::Handle<reco::CaloClusterCollection> &cCH, const edm::Handle<SimClusterCollection> &sCCH) const;
+        const edm::Handle<reco::CaloClusterFloatCollection> &cCH, const edm::Handle<SimClusterCollection> &sCCH) const;
   };
 }  // namespace ticl
 

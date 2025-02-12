@@ -16,13 +16,13 @@ namespace {
     return idx;
   }
 
-  float dist2(const edm::Ptr<reco::BasicCluster> &a, const edm::Ptr<reco::BasicCluster> &b) {
+  float dist2(const edm::Ptr<reco::CaloClusterFloat> &a, const edm::Ptr<reco::CaloClusterFloat> &b) {
     return reco::deltaR2(*a, *b);
   }
 
   //get distance between cluster and multicluster axis (defined by remaning cluster with highest energy)
   // N.B. the order of the clusters matters
-  float distAxisCluster2(const edm::Ptr<reco::BasicCluster> &a, const edm::Ptr<reco::BasicCluster> &b) {
+  float distAxisCluster2(const edm::Ptr<reco::CaloClusterFloat> &a, const edm::Ptr<reco::CaloClusterFloat> &b) {
     float tanTheta = tan(2 * atan(exp(-1 * a->eta())));
     float ax = b->z() * tanTheta * cos(a->phi());
     float ay = b->z() * tanTheta * sin(a->phi());

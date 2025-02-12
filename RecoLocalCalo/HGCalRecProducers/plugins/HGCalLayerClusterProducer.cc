@@ -67,7 +67,7 @@ public:
 private:
   edm::EDGetTokenT<HGCRecHitCollection> hits_token_;
 
-  reco::CaloCluster::AlgoId algoId_;
+  reco::CaloClusterFloat::AlgoId algoId_;
 
   std::unique_ptr<HGCalClusteringAlgoBase> algo_;
   std::string detector_;
@@ -113,7 +113,7 @@ private:
 };
 
 HGCalLayerClusterProducer::HGCalLayerClusterProducer(const edm::ParameterSet& ps)
-    : algoId_(reco::CaloCluster::undefined),
+    : algoId_(reco::CaloClusterFloat::undefined),
       detector_(ps.getParameter<std::string>("detector")),  // one of EE, FH, BH, HFNose
       timeClname_(ps.getParameter<std::string>("timeClname")),
       hitsTime_(ps.getParameter<unsigned int>("nHitsTime")),
@@ -137,7 +137,7 @@ HGCalLayerClusterProducer::HGCalLayerClusterProducer(const edm::ParameterSet& ps
   positionDeltaRho2_ = pluginPSet.getParameter<double>("positionDeltaRho2");
 
   produces<std::vector<float>>("InitialLayerClustersMask");
-  produces<std::vector<reco::BasicCluster>>();
+  produces<std::vector<reco::CaloClusterFloat>>();
   //time for layer clusters
   produces<edm::ValueMap<std::pair<float, float>>>(timeClname_);
 }
@@ -240,7 +240,7 @@ std::pair<float, float> HGCalLayerClusterProducer::calculateTime(
 void HGCalLayerClusterProducer::produce(edm::Event& evt, const edm::EventSetup& es) {
   edm::Handle<HGCRecHitCollection> hits;
 
-  std::unique_ptr<std::vector<reco::BasicCluster>> clusters(new std::vector<reco::BasicCluster>);
+  std::unique_ptr<std::vector<reco::CaloClusterFloat>> clusters(new std::vector<reco::CaloClusterFloat>);
 
   edm::ESHandle<CaloGeometry> geom = es.getHandle(caloGeomToken_);
   rhtools_.setGeometry(*geom);
@@ -264,7 +264,7 @@ void HGCalLayerClusterProducer::produce(edm::Event& evt, const edm::EventSetup& 
   times.reserve(clusters->size());
 
   for (unsigned i = 0; i < clusters->size(); ++i) {
-    reco::CaloCluster& sCl = (*clusters)[i];
+    reco::CaloClusterFloat& sCl = (*clusters)[i];
     if (!calculatePositionInAlgo_) {
       sCl.setPosition(calculatePosition(hitmap, sCl.hitsAndFractions()));
     }
@@ -303,13 +303,13 @@ void HGCalLayerClusterProducer::produce(edm::Event& evt, const edm::EventSetup& 
 
 void HGCalLayerClusterProducer::setAlgoId() {
   if (detector_ == "EE") {
-    algoId_ = reco::CaloCluster::hgcal_em;
+    algoId_ = reco::CaloClusterFloat::hgcal_em;
   } else if (detector_ == "FH") {
-    algoId_ = reco::CaloCluster::hgcal_had;
+    algoId_ = reco::CaloClusterFloat::hgcal_had;
   } else if (detector_ == "BH") {
-    algoId_ = reco::CaloCluster::hgcal_scintillator;
+    algoId_ = reco::CaloClusterFloat::hgcal_scintillator;
   } else if (detector_ == "HFNose") {
-    algoId_ = reco::CaloCluster::hfnose;
+    algoId_ = reco::CaloClusterFloat::hfnose;
   }
 }
 

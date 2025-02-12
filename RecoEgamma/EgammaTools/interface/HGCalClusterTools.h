@@ -2,6 +2,7 @@
 #define RecoEgamma_EgammaTools_HGCalClusterTools_h
 
 #include "DataFormats/CaloRecHit/interface/CaloClusterFwd.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include <vector>
 
 class HGCalClusterTools {
@@ -10,7 +11,7 @@ public:
 
   static float energyInCone(const float eta,
                             const float phi,
-                            const std::vector<reco::CaloCluster>& layerClusters,
+                            const std::vector<reco::CaloClusterFloat>& layerClusters,
                             const float minDR,
                             const float maxDR,
                             const float minEt,
@@ -20,7 +21,7 @@ public:
 
   static float hadEnergyInCone(const float eta,
                                const float phi,
-                               const std::vector<reco::CaloCluster>& layerClusters,
+                               const std::vector<reco::CaloClusterFloat>& layerClusters,
                                const float minDR,
                                const float maxDR,
                                const float minEt,
@@ -31,7 +32,7 @@ public:
   }
   static float emEnergyInCone(const float eta,
                               const float phi,
-                              const std::vector<reco::CaloCluster>& layerClusters,
+                              const std::vector<reco::CaloClusterFloat>& layerClusters,
                               const float minDR,
                               const float maxDR,
                               const float minEt,

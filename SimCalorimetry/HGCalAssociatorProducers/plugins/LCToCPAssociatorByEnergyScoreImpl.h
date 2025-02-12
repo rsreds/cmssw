@@ -73,10 +73,10 @@ public:
                                              const std::unordered_map<DetId, const unsigned int> *,
                                              const std::vector<const HIT *> &hits);
 
-  ticl::RecoToSimCollection associateRecoToSim(const edm::Handle<reco::CaloClusterCollection> &cCH,
+  ticl::RecoToSimCollection associateRecoToSim(const edm::Handle<reco::CaloClusterFloatCollection> &cCH,
                                                const edm::Handle<CaloParticleCollection> &cPCH) const override;
 
-  ticl::SimToRecoCollection associateSimToReco(const edm::Handle<reco::CaloClusterCollection> &cCH,
+  ticl::SimToRecoCollection associateSimToReco(const edm::Handle<reco::CaloClusterFloatCollection> &cCH,
                                                const edm::Handle<CaloParticleCollection> &cPCH) const override;
 
 private:
@@ -85,7 +85,7 @@ private:
   const std::unordered_map<DetId, const unsigned int> *hitMap_;
   unsigned layers_;
   edm::EDProductGetter const *productGetter_;
-  ticl::association makeConnections(const edm::Handle<reco::CaloClusterCollection> &cCH,
+  ticl::association makeConnections(const edm::Handle<reco::CaloClusterFloatCollection> &cCH,
                                     const edm::Handle<CaloParticleCollection> &cPCH) const;
   std::vector<const HIT *> hits_;
 };

@@ -6,7 +6,7 @@ namespace ticl {
 
   ticl::association_t TracksterToSimTracksterHitLCAssociatorBaseImpl::makeConnections(
       const edm::Handle<ticl::TracksterCollection> &tCH,
-      const edm::Handle<reco::CaloClusterCollection> &lCCH,
+      const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
       const edm::Handle<SimClusterCollection> &sCCH,
       const edm::Handle<CaloParticleCollection> &cPCH,
       const edm::Handle<ticl::TracksterCollection> &sTCH) const {
@@ -15,7 +15,7 @@ namespace ticl {
 
   ticl::RecoToSimCollectionSimTracksters TracksterToSimTracksterHitLCAssociatorBaseImpl::associateRecoToSim(
       const edm::Handle<ticl::TracksterCollection> &tCH,
-      const edm::Handle<reco::CaloClusterCollection> &lCCH,
+      const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
       const edm::Handle<SimClusterCollection> &sCCH,
       const edm::Handle<CaloParticleCollection> &cPCH,
       const edm::Handle<ticl::TracksterCollection> &sTCH) const {
@@ -24,7 +24,7 @@ namespace ticl {
 
   ticl::SimToRecoCollectionSimTracksters TracksterToSimTracksterHitLCAssociatorBaseImpl::associateSimToReco(
       const edm::Handle<ticl::TracksterCollection> &tCH,
-      const edm::Handle<reco::CaloClusterCollection> &lCCH,
+      const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
       const edm::Handle<SimClusterCollection> &sCCH,
       const edm::Handle<CaloParticleCollection> &cPCH,
       const edm::Handle<ticl::TracksterCollection> &sTCH) const {

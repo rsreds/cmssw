@@ -95,9 +95,9 @@ protected:
   const edm::FileInPath cummatbudinxo_;
   const bool isTICLv5_;
 
-  std::vector<edm::EDGetTokenT<reco::CaloClusterCollection>> labelToken;
+  std::vector<edm::EDGetTokenT<reco::CaloClusterFloatCollection>> labelToken;
   edm::EDGetTokenT<std::vector<SimCluster>> simClusters_;
-  edm::EDGetTokenT<reco::CaloClusterCollection> layerclusters_;
+  edm::EDGetTokenT<reco::CaloClusterFloatCollection> layerclusters_;
   std::vector<edm::EDGetTokenT<ticl::TracksterCollection>> label_tstTokens;
   edm::EDGetTokenT<ticl::TracksterCollection> simTracksters_;
   edm::EDGetTokenT<ticl::TracksterCollection> simTracksters_fromCPs_;

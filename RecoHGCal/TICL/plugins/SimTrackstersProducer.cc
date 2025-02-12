@@ -13,7 +13,7 @@
 #include "FWCore/ParameterSet/interface/ParameterSetDescription.h"
 #include "DataFormats/Common/interface/OrphanHandle.h"
 
-#include "DataFormats/CaloRecHit/interface/CaloCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "DataFormats/ParticleFlowReco/interface/PFCluster.h"
 
 #include "DataFormats/HGCalReco/interface/Trackster.h"
@@ -63,7 +63,7 @@ public:
                        int loop_index);
 
   void addTrackster(const int index,
-                    const std::vector<std::pair<edm::Ref<reco::CaloClusterCollection>, std::pair<float, float>>>& lcVec,
+                    const std::vector<std::pair<edm::Ref<reco::CaloClusterFloatCollection>, std::pair<float, float>>>& lcVec,
                     const std::vector<float>& inputClusterMask,
                     const float fractionCut_,
                     const float energy,
@@ -81,7 +81,7 @@ private:
   std::string detector_;
   const bool doNose_ = false;
   const bool computeLocalTime_;
-  const edm::EDGetTokenT<std::vector<reco::CaloCluster>> clusters_token_;
+  const edm::EDGetTokenT<std::vector<reco::CaloClusterFloat>> clusters_token_;
   const edm::EDGetTokenT<edm::ValueMap<std::pair<float, float>>> clustersTime_token_;
   const edm::EDGetTokenT<std::vector<float>> filtered_layerclusters_mask_token_;
 
@@ -186,7 +186,7 @@ void SimTrackstersProducer::makePUTrackster(const std::vector<float>& inputClust
 
 void SimTrackstersProducer::addTrackster(
     const int index,
-    const std::vector<std::pair<edm::Ref<reco::CaloClusterCollection>, std::pair<float, float>>>& lcVec,
+    const std::vector<std::pair<edm::Ref<reco::CaloClusterFloatCollection>, std::pair<float, float>>>& lcVec,
     const std::vector<float>& inputClusterMask,
     const float fractionCut_,
     const float energy,

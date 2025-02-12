@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
-#include "DataFormats/CaloRecHit/interface/CaloCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "DataFormats/HGCalReco/interface/TICLSeedingRegion.h"
 
 class HGCDoublet {
@@ -18,7 +18,7 @@ public:
   HGCDoublet(const int innerClusterId,
              const int outerClusterId,
              const int doubletId,
-             const std::vector<reco::CaloCluster> *layerClusters,
+             const std::vector<reco::CaloClusterFloat> *layerClusters,
              const int seedIndex,
              bool areSiblingClusters = false)
       : layerClusters_(layerClusters),
@@ -94,7 +94,7 @@ public:
   void setVisited(bool visited) { alreadyVisited_ = visited; }
 
 private:
-  const std::vector<reco::CaloCluster> *layerClusters_;
+  const std::vector<reco::CaloClusterFloat> *layerClusters_;
   std::vector<int> outerNeighbors_;
   std::vector<int> innerNeighbors_;
 

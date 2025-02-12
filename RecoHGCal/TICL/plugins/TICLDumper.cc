@@ -23,7 +23,7 @@
 #include "FWCore/ServiceRegistry/interface/Service.h"
 
 #include "DataFormats/Provenance/interface/EventID.h"
-#include "DataFormats/CaloRecHit/interface/CaloCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "DataFormats/HGCalReco/interface/Trackster.h"
 #include "DataFormats/HGCalReco/interface/TICLCandidate.h"
 #include "DataFormats/MuonReco/interface/Muon.h"
@@ -253,7 +253,7 @@ public:
   }
 
   void fillFromEvent(std::vector<ticl::Trackster> const& tracksters,
-                     std::vector<reco::CaloCluster> const& clusters,
+                     std::vector<reco::CaloClusterFloat> const& clusters,
                      edm::ValueMap<std::pair<float, float>> const& layerClustersTimes,
                      DetectorTools const& detectorTools,
                      edm::Handle<std::vector<SimCluster>> simClusters_h,
@@ -571,7 +571,7 @@ private:
   std::vector<TTree*> tracksters_trees;  ///< TTree for each trackster collection to dump
 
   const edm::EDGetTokenT<std::vector<ticl::Trackster>> tracksters_in_candidate_token_;
-  const edm::EDGetTokenT<std::vector<reco::CaloCluster>> layer_clusters_token_;
+  const edm::EDGetTokenT<std::vector<reco::CaloClusterFloat>> layer_clusters_token_;
   const edm::EDGetTokenT<std::vector<TICLCandidate>> ticl_candidates_token_;
   const edm::EDGetTokenT<std::vector<ticl::Trackster>>
       ticl_candidates_tracksters_token_;  ///< trackster collection used by TICLCandidate
@@ -838,7 +838,7 @@ TICLDumper::TICLDumper(const edm::ParameterSet& ps)
       tracksters_token_(),
       tracksters_in_candidate_token_(
           consumes<std::vector<ticl::Trackster>>(ps.getParameter<edm::InputTag>("trackstersInCand"))),
-      layer_clusters_token_(consumes<std::vector<reco::CaloCluster>>(ps.getParameter<edm::InputTag>("layerClusters"))),
+      layer_clusters_token_(consumes<std::vector<reco::CaloClusterFloat>>(ps.getParameter<edm::InputTag>("layerClusters"))),
       ticl_candidates_token_(consumes<std::vector<TICLCandidate>>(ps.getParameter<edm::InputTag>("ticlcandidates"))),
       ticl_candidates_tracksters_token_(
           consumes<std::vector<ticl::Trackster>>(ps.getParameter<edm::InputTag>("ticlcandidates"))),
@@ -1057,7 +1057,7 @@ void TICLDumper::analyze(const edm::Event& event, const edm::EventSetup& setup) 
   event.getByToken(tracksters_in_candidate_token_, tracksters_in_candidate_handle);
 
   //get all the layer clusters
-  edm::Handle<std::vector<reco::CaloCluster>> layer_clusters_h;
+  edm::Handle<std::vector<reco::CaloClusterFloat>> layer_clusters_h;
   event.getByToken(layer_clusters_token_, layer_clusters_h);
   const auto& clusters = *layer_clusters_h;
 

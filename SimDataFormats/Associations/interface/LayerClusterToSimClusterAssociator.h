@@ -26,13 +26,13 @@ namespace ticl {
         delete;  // stop default
     // ---------- const member functions ---------------------
     /// Associate a LayerCluster to SimClusters
-    ticl::RecoToSimCollectionWithSimClusters associateRecoToSim(const edm::Handle<reco::CaloClusterCollection> &cCCH,
+    ticl::RecoToSimCollectionWithSimClusters associateRecoToSim(const edm::Handle<reco::CaloClusterFloatCollection> &cCCH,
                                                                 const edm::Handle<SimClusterCollection> &sCCH) const {
       return m_impl->associateRecoToSim(cCCH, sCCH);
     };
 
     /// Associate a SimCluster to LayerClusters
-    ticl::SimToRecoCollectionWithSimClusters associateSimToReco(const edm::Handle<reco::CaloClusterCollection> &cCCH,
+    ticl::SimToRecoCollectionWithSimClusters associateSimToReco(const edm::Handle<reco::CaloClusterFloatCollection> &cCCH,
                                                                 const edm::Handle<SimClusterCollection> &sCCH) const {
       return m_impl->associateSimToReco(cCCH, sCCH);
     }

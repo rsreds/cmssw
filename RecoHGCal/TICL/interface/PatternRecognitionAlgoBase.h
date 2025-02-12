@@ -8,7 +8,7 @@
 #include <vector>
 #include <functional>
 #include <algorithm>
-#include "DataFormats/CaloRecHit/interface/CaloCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "DataFormats/HGCalReco/interface/Trackster.h"
 #include "DataFormats/HGCalReco/interface/TICLLayerTile.h"
 #include "DataFormats/HGCalReco/interface/TICLSeedingRegion.h"
@@ -35,14 +35,14 @@ namespace ticl {
     struct Inputs {
       const edm::Event& ev;
       const edm::EventSetup& es;
-      const std::vector<reco::CaloCluster>& layerClusters;
+      const std::vector<reco::CaloClusterFloat>& layerClusters;
       const std::vector<float>& mask;
       const edm::ValueMap<std::pair<float, float>>& layerClustersTime;
       const TILES& tiles;
       const std::vector<TICLSeedingRegion>& regions;
       Inputs(const edm::Event& eV,
              const edm::EventSetup& eS,
-             const std::vector<reco::CaloCluster>& lC,
+             const std::vector<reco::CaloClusterFloat>& lC,
              const std::vector<float>& mS,
              const edm::ValueMap<std::pair<float, float>>& lT,
              const TILES& tL,

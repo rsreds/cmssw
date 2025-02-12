@@ -2,7 +2,7 @@
 #define RecoLocalCalo_HGCalRecAlgos_HGCal3DClustering
 
 #include "DataFormats/Math/interface/Point3D.h"
-#include "DataFormats/EgammaReco/interface/BasicCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "DataFormats/ParticleFlowReco/interface/HGCalMultiCluster.h"
 
 #include <vector>
@@ -49,7 +49,7 @@ public:
     zees.resize(2 * (maxlayer + 1), 0.);
   }
 
-  typedef std::vector<reco::BasicCluster> ClusterCollection;
+  typedef std::vector<reco::CaloClusterFloat> ClusterCollection;
 
   std::vector<reco::HGCalMultiCluster> makeClusters(const reco::HGCalMultiCluster::ClusterCollection&);
 

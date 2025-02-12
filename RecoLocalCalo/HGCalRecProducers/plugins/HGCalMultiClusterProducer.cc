@@ -31,8 +31,8 @@ private:
   edm::EDGetTokenT<HGCRecHitCollection> hits_fh_token;
   edm::EDGetTokenT<HGCRecHitCollection> hits_ee_token;
   edm::EDGetTokenT<HGCRecHitCollection> hits_bh_token;
-  edm::EDGetTokenT<std::vector<reco::BasicCluster>> clusters_token;
-  edm::EDGetTokenT<std::vector<reco::BasicCluster>> clusters_sharing_token;
+  edm::EDGetTokenT<std::vector<reco::CaloClusterFloat>> clusters_token;
+  edm::EDGetTokenT<std::vector<reco::CaloClusterFloat>> clusters_sharing_token;
   std::unique_ptr<HGCal3DClustering> multicluster_algo;
   bool doSharing;
   HGCalClusteringAlgoBase::VerbosityLevel verbosity;
@@ -43,9 +43,9 @@ HGCalMultiClusterProducer::HGCalMultiClusterProducer(const edm::ParameterSet& ps
       verbosity((HGCalClusteringAlgoBase::VerbosityLevel)ps.getUntrackedParameter<unsigned int>("verbosity", 3)) {
   std::vector<double> multicluster_radii = ps.getParameter<std::vector<double>>("multiclusterRadii");
   double minClusters = ps.getParameter<unsigned>("minClusters");
-  clusters_token = consumes<std::vector<reco::BasicCluster>>(ps.getParameter<edm::InputTag>("HGCLayerClusters"));
+  clusters_token = consumes<std::vector<reco::CaloClusterFloat>>(ps.getParameter<edm::InputTag>("HGCLayerClusters"));
   clusters_sharing_token =
-      consumes<std::vector<reco::BasicCluster>>(ps.getParameter<edm::InputTag>("HGCLayerClustersSharing"));
+      consumes<std::vector<reco::CaloClusterFloat>>(ps.getParameter<edm::InputTag>("HGCLayerClustersSharing"));
   hits_ee_token = consumes<HGCRecHitCollection>(ps.getParameter<edm::InputTag>("HGCEEInput"));
   hits_fh_token = consumes<HGCRecHitCollection>(ps.getParameter<edm::InputTag>("HGCFHInput"));
   hits_bh_token = consumes<HGCRecHitCollection>(ps.getParameter<edm::InputTag>("HGCBHInput"));
@@ -79,22 +79,22 @@ void HGCalMultiClusterProducer::fillDescriptions(edm::ConfigurationDescriptions&
 }
 
 void HGCalMultiClusterProducer::produce(edm::Event& evt, const edm::EventSetup& es) {
-  edm::Handle<std::vector<reco::BasicCluster>> clusterHandle;
-  edm::Handle<std::vector<reco::BasicCluster>> clusterSharingHandle;
+  edm::Handle<std::vector<reco::CaloClusterFloat>> clusterHandle;
+  edm::Handle<std::vector<reco::CaloClusterFloat>> clusterSharingHandle;
 
   evt.getByToken(clusters_token, clusterHandle);
   if (doSharing)
     evt.getByToken(clusters_sharing_token, clusterSharingHandle);
 
-  edm::PtrVector<reco::BasicCluster> clusterPtrs, clusterPtrsSharing;
+  edm::PtrVector<reco::CaloClusterFloat> clusterPtrs, clusterPtrsSharing;
   for (unsigned i = 0; i < clusterHandle->size(); ++i) {
-    edm::Ptr<reco::BasicCluster> ptr(clusterHandle, i);
+    edm::Ptr<reco::CaloClusterFloat> ptr(clusterHandle, i);
     clusterPtrs.push_back(ptr);
   }
 
   if (doSharing) {
     for (unsigned i = 0; i < clusterSharingHandle->size(); ++i) {
-      edm::Ptr<reco::BasicCluster> ptr(clusterSharingHandle, i);
+      edm::Ptr<reco::CaloClusterFloat> ptr(clusterSharingHandle, i);
       clusterPtrsSharing.push_back(ptr);
     }
   }

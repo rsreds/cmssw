@@ -240,7 +240,7 @@ void PatternRecognitionbyCA<TILES>::filter(std::vector<Trackster> &output,
 template <typename TILES>
 void PatternRecognitionbyCA<TILES>::mergeTrackstersTRK(
     const std::vector<Trackster> &input,
-    const std::vector<reco::CaloCluster> &layerClusters,
+    const std::vector<reco::CaloClusterFloat> &layerClusters,
     std::vector<Trackster> &output,
     std::unordered_map<int, std::vector<int>> &seedToTracksterAssociation) const {
   output.reserve(input.size());

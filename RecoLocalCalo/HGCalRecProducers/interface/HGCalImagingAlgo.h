@@ -16,7 +16,7 @@
 #include "Geometry/Records/interface/CaloGeometryRecord.h"
 
 #include "DataFormats/Math/interface/Point3D.h"
-#include "DataFormats/EgammaReco/interface/BasicCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 
 #include "RecoLocalCalo/HGCalRecAlgos/interface/RecHitTools.h"
 #include "CommonTools/RecoAlgos/interface/KDTreeLinkerAlgo.h"
@@ -33,7 +33,7 @@ public:
   HGCalImagingAlgo(const edm::ParameterSet &ps)
       : HGCalClusteringAlgoBase(
             (HGCalClusteringAlgoBase::VerbosityLevel)ps.getUntrackedParameter<unsigned int>("verbosity", 3),
-            reco::CaloCluster::undefined),
+            reco::CaloClusterFloat::undefined),
         thresholdW0_(ps.getParameter<std::vector<double>>("thresholdW0")),
         positionDeltaRho_c_(ps.getParameter<std::vector<double>>("positionDeltaRho_c")),
         vecDeltas_(ps.getParameter<std::vector<double>>("deltac")),
@@ -60,7 +60,7 @@ public:
   void makeClusters() override;
 
   // this is the method to get the cluster collection out
-  std::vector<reco::BasicCluster> getClusters(bool) override;
+  std::vector<reco::CaloClusterFloat> getClusters(bool) override;
 
   // use this if you want to reuse the same cluster object but don't want to accumulate clusters (hardly useful?)
   void reset() override {
@@ -134,7 +134,7 @@ private:
   double sigma2_;  // transverse shower size
 
   // The vector of clusters
-  std::vector<reco::BasicCluster> clusters_v_;
+  std::vector<reco::CaloClusterFloat> clusters_v_;
 
   // For keeping the density per hit
   Density density_;

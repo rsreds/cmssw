@@ -11,7 +11,7 @@
 #include "Geometry/HGCalGeometry/interface/HGCalGeometry.h"
 #include "Geometry/Records/interface/CaloGeometryRecord.h"
 
-#include "DataFormats/EgammaReco/interface/BasicCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "DataFormats/Math/interface/Point3D.h"
 #include "DataFormats/Math/interface/deltaPhi.h"
 
@@ -37,7 +37,7 @@ public:
   HGCalCLUEAlgoT(const edm::ParameterSet& ps)
       : HGCalClusteringAlgoBase(
             (HGCalClusteringAlgoBase::VerbosityLevel)ps.getUntrackedParameter<unsigned int>("verbosity", 3),
-            reco::CaloCluster::undefined),
+            reco::CaloClusterFloat::undefined),
         vecDeltas_(ps.getParameter<std::vector<double>>("deltac")),
         kappa_(ps.getParameter<double>("kappa")),
         ecut_(ps.getParameter<double>("ecut")),
@@ -72,7 +72,7 @@ public:
   void makeClusters() override;
 
   // this is the method to get the cluster collection out
-  std::vector<reco::BasicCluster> getClusters(bool) override;
+  std::vector<reco::CaloClusterFloat> getClusters(bool) override;
 
   void reset() override {
     clusters_v_.clear();

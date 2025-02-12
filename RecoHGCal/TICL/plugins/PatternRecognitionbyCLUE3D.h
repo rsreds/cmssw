@@ -23,7 +23,7 @@ namespace ticl {
                 const typename PatternRecognitionAlgoBaseT<TILES>::Inputs& input,
                 std::unordered_map<int, std::vector<int>>& seedToTracksterAssociation) override;
 
-    void energyRegressionAndID(const std::vector<reco::CaloCluster>& layerClusters,
+    void energyRegressionAndID(const std::vector<reco::CaloClusterFloat>& layerClusters,
                                const tensorflow::Session*,
                                std::vector<Trackster>& result);
 

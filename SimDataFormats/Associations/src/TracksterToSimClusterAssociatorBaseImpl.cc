@@ -8,14 +8,14 @@ namespace ticl {
 
   ticl::RecoToSimCollectionTracksters TracksterToSimClusterAssociatorBaseImpl::associateRecoToSim(
       const edm::Handle<ticl::TracksterCollection> &tCH,
-      const edm::Handle<reco::CaloClusterCollection> &lCCH,
+      const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
       const edm::Handle<SimClusterCollection> &sCCH) const {
     return ticl::RecoToSimCollectionTracksters();
   }
 
   ticl::SimToRecoCollectionTracksters TracksterToSimClusterAssociatorBaseImpl::associateSimToReco(
       const edm::Handle<ticl::TracksterCollection> &tCH,
-      const edm::Handle<reco::CaloClusterCollection> &lCCH,
+      const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
       const edm::Handle<SimClusterCollection> &sCCH) const {
     return ticl::SimToRecoCollectionTracksters();
   }

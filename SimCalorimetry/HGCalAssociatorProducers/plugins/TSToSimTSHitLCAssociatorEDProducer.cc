@@ -37,7 +37,7 @@ private:
   edm::EDGetTokenT<ticl::TracksterCollection> TSCollectionToken_;
   edm::EDGetTokenT<ticl::TracksterCollection> SimTSCollectionToken_;
   edm::EDGetTokenT<ticl::TracksterCollection> SimTSFromCPCollectionToken_;
-  edm::EDGetTokenT<reco::CaloClusterCollection> LCCollectionToken_;
+  edm::EDGetTokenT<reco::CaloClusterFloatCollection> LCCollectionToken_;
   edm::EDGetTokenT<SimClusterCollection> SCCollectionToken_;
   edm::EDGetTokenT<CaloParticleCollection> CPCollectionToken_;
   edm::EDGetTokenT<std::map<uint, std::vector<uint>>> simTrackstersMap_;
@@ -51,7 +51,7 @@ TSToSimTSHitLCAssociatorEDProducer::TSToSimTSHitLCAssociatorEDProducer(const edm
 
   TSCollectionToken_ = consumes<ticl::TracksterCollection>(pset.getParameter<edm::InputTag>("label_tst"));
   SimTSCollectionToken_ = consumes<ticl::TracksterCollection>(pset.getParameter<edm::InputTag>("label_simTst"));
-  LCCollectionToken_ = consumes<reco::CaloClusterCollection>(pset.getParameter<edm::InputTag>("label_lcl"));
+  LCCollectionToken_ = consumes<reco::CaloClusterFloatCollection>(pset.getParameter<edm::InputTag>("label_lcl"));
   SCCollectionToken_ = consumes<SimClusterCollection>(pset.getParameter<edm::InputTag>("label_scl"));
   CPCollectionToken_ = consumes<CaloParticleCollection>(pset.getParameter<edm::InputTag>("label_cp"));
   associatorToken_ =
@@ -74,7 +74,7 @@ void TSToSimTSHitLCAssociatorEDProducer::produce(edm::StreamID,
   Handle<ticl::TracksterCollection> SimTSCollection;
   iEvent.getByToken(SimTSCollectionToken_, SimTSCollection);
 
-  Handle<reco::CaloClusterCollection> LCCollection;
+  Handle<reco::CaloClusterFloatCollection> LCCollection;
   iEvent.getByToken(LCCollectionToken_, LCCollection);
 
   Handle<SimClusterCollection> SCCollection;

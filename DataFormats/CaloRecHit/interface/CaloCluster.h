@@ -19,6 +19,8 @@
 
 #include "DataFormats/DetId/interface/DetId.h"
 
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
+
 #include <vector>
 #include <string>
 #include <iostream>
@@ -130,6 +132,28 @@ namespace reco {
       flags_ = flags & flagsMask_;
     }
 
+    explicit CaloCluster(const CaloClusterFloat& clusterFloat)
+    : energy_(clusterFloat.energy()),
+      correctedEnergy_(clusterFloat.correctedEnergy()),
+      correctedEnergyUncertainty_(clusterFloat.correctedEnergyUncertainty()),
+      position_(static_cast<math::XYZPoint>(clusterFloat.position())),
+      caloID_(clusterFloat.caloID()),
+      hitsAndFractions_(clusterFloat.hitsAndFractions()),
+      algoID_(static_cast<AlgoID>(clusterFloat.algoID())),
+      seedId_(clusterFloat.seed()),
+      flags_(clusterFloat.flags()) {}
+
+    explicit CaloCluster(CaloClusterFloat& clusterFloat)
+    : energy_(clusterFloat.energy()),
+      correctedEnergy_(clusterFloat.correctedEnergy()),
+      correctedEnergyUncertainty_(clusterFloat.correctedEnergyUncertainty()),
+      position_(static_cast<math::XYZPoint>(clusterFloat.position())),
+      caloID_(clusterFloat.caloID()),
+      hitsAndFractions_(clusterFloat.hitsAndFractions()),
+      algoID_(static_cast<AlgoID>(clusterFloat.algoID())),
+      seedId_(clusterFloat.seed()),
+      flags_(clusterFloat.flags()) {}
+    
     /// destructor
     virtual ~CaloCluster() {}
 

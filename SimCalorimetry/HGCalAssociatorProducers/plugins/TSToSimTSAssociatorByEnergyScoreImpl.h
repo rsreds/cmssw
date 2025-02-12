@@ -73,12 +73,12 @@ public:
 
   ticl::RecoToSimCollectionSimTracksters associateRecoToSim(
       const edm::Handle<ticl::TracksterCollection> &tCH,
-      const edm::Handle<reco::CaloClusterCollection> &lCCH,
+      const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
       const edm::Handle<ticl::TracksterCollection> &sTCH) const override;
 
   ticl::SimToRecoCollectionSimTracksters associateSimToReco(
       const edm::Handle<ticl::TracksterCollection> &tCH,
-      const edm::Handle<reco::CaloClusterCollection> &lCCH,
+      const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
       const edm::Handle<ticl::TracksterCollection> &sTCH) const override;
 
 private:
@@ -89,6 +89,6 @@ private:
   unsigned layers_;
   edm::EDProductGetter const *productGetter_;
   ticl::association makeConnections(const edm::Handle<ticl::TracksterCollection> &tCH,
-                                    const edm::Handle<reco::CaloClusterCollection> &lCCH,
+                                    const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
                                     const edm::Handle<ticl::TracksterCollection> &sTCH) const;
 };

@@ -13,7 +13,7 @@ namespace {
     return idx;
   }
 
-  float distReal2(const edm::Ptr<reco::BasicCluster> &a, const std::array<double, 3> &to) {
+  float distReal2(const edm::Ptr<reco::CaloClusterFloat> &a, const std::array<double, 3> &to) {
     return (a->x() - to[0]) * (a->x() - to[0]) + (a->y() - to[1]) * (a->y() - to[1]);
   }
 }  // namespace

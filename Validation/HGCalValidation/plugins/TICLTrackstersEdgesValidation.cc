@@ -16,7 +16,7 @@
 #include "DataFormats/HGCalReco/interface/Trackster.h"
 #include "DataFormats/HGCalReco/interface/TICLSeedingRegion.h"
 
-#include "DataFormats/CaloRecHit/interface/CaloCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "RecoLocalCalo/HGCalRecAlgos/interface/RecHitTools.h"
 
 using namespace ticl;
@@ -68,7 +68,7 @@ private:
   std::string folder_;
   std::vector<std::string> trackstersCollectionsNames_;
   std::vector<edm::EDGetTokenT<std::vector<Trackster>>> tracksterTokens_;
-  edm::EDGetTokenT<std::vector<reco::CaloCluster>> layerClustersToken_;
+  edm::EDGetTokenT<std::vector<reco::CaloClusterFloat>> layerClustersToken_;
   edm::EDGetTokenT<std::vector<TICLSeedingRegion>> ticlSeedingGlobalToken_;
   edm::EDGetTokenT<std::vector<TICLSeedingRegion>> ticlSeedingTrkToken_;
   mutable hgcal::RecHitTools rhtools_;
@@ -82,7 +82,7 @@ TICLTrackstersEdgesValidation::TICLTrackstersEdgesValidation(const edm::Paramete
                                              trackstersCollectionsNames_.emplace_back(tag.label());
                                              return consumes<std::vector<Trackster>>(tag);
                                            });
-  layerClustersToken_ = consumes<std::vector<reco::CaloCluster>>(iConfig.getParameter<edm::InputTag>("layerClusters"));
+  layerClustersToken_ = consumes<std::vector<reco::CaloClusterFloat>>(iConfig.getParameter<edm::InputTag>("layerClusters"));
   ticlSeedingGlobalToken_ =
       consumes<std::vector<TICLSeedingRegion>>(iConfig.getParameter<edm::InputTag>("ticlSeedingGlobal"));
   ticlSeedingTrkToken_ =
@@ -94,7 +94,7 @@ TICLTrackstersEdgesValidation::~TICLTrackstersEdgesValidation() {}
 void TICLTrackstersEdgesValidation::dqmAnalyze(edm::Event const& iEvent,
                                                edm::EventSetup const& iSetup,
                                                Histograms_TICLTrackstersEdgesValidation const& histos) const {
-  edm::Handle<std::vector<reco::CaloCluster>> layerClustersH;
+  edm::Handle<std::vector<reco::CaloClusterFloat>> layerClustersH;
   iEvent.getByToken(layerClustersToken_, layerClustersH);
   auto const& layerClusters = *layerClustersH.product();
 

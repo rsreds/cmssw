@@ -1705,8 +1705,8 @@ void HGVHistoProducerAlgo::HGVHistoProducerAlgo::fill_simCluster_histos(const Hi
 void HGVHistoProducerAlgo::HGVHistoProducerAlgo::fill_simClusterAssociation_histos(
     const Histograms& histograms,
     const int count,
-    edm::Handle<reco::CaloClusterCollection> clusterHandle,
-    const reco::CaloClusterCollection& clusters,
+    edm::Handle<reco::CaloClusterFloatCollection> clusterHandle,
+    const reco::CaloClusterFloatCollection& clusters,
     edm::Handle<std::vector<SimCluster>> simClusterHandle,
     std::vector<SimCluster> const& simClusters,
     std::vector<size_t> const& sCIndices,
@@ -1741,14 +1741,14 @@ void HGVHistoProducerAlgo::HGVHistoProducerAlgo::fill_simClusterAssociation_hist
 
 void HGVHistoProducerAlgo::fill_cluster_histos(const Histograms& histograms,
                                                const int count,
-                                               const reco::CaloCluster& cluster) const {
+                                               const reco::CaloClusterFloat& cluster) const {
   const auto eta = getEta(cluster.eta());
   histograms.h_cluster_eta[count]->Fill(eta);
 }
 
 void HGVHistoProducerAlgo::layerClusters_to_CaloParticles(const Histograms& histograms,
-                                                          edm::Handle<reco::CaloClusterCollection> clusterHandle,
-                                                          const reco::CaloClusterCollection& clusters,
+                                                          edm::Handle<reco::CaloClusterFloatCollection> clusterHandle,
+                                                          const reco::CaloClusterFloatCollection& clusters,
                                                           edm::Handle<std::vector<CaloParticle>> caloParticleHandle,
                                                           std::vector<CaloParticle> const& cP,
                                                           std::vector<size_t> const& cPIndices,
@@ -1867,7 +1867,7 @@ void HGVHistoProducerAlgo::layerClusters_to_CaloParticles(const Histograms& hist
     histograms.h_denom_layercl_eta_perlayer.at(lcLayerId)->Fill(clusters[lcId].eta());
     histograms.h_denom_layercl_phi_perlayer.at(lcLayerId)->Fill(clusters[lcId].phi());
     //
-    const edm::Ref<reco::CaloClusterCollection> lcRef(clusterHandle, lcId);
+    const edm::Ref<reco::CaloClusterFloatCollection> lcRef(clusterHandle, lcId);
     const auto& cpsIt = cpsInLayerClusterMap.find(lcRef);
     if (cpsIt == cpsInLayerClusterMap.end())
       continue;
@@ -1886,7 +1886,7 @@ void HGVHistoProducerAlgo::layerClusters_to_CaloParticles(const Histograms& hist
       auto const& cp_linked =
           std::find_if(std::begin(cPOnLayerMap[cpPair.first]),
                        std::end(cPOnLayerMap[cpPair.first]),
-                       [&lcRef](const std::pair<edm::Ref<reco::CaloClusterCollection>, std::pair<float, float>>& p) {
+                       [&lcRef](const std::pair<edm::Ref<reco::CaloClusterFloatCollection>, std::pair<float, float>>& p) {
                          return p.first == lcRef;
                        });
       if (cp_linked ==
@@ -1911,7 +1911,7 @@ void HGVHistoProducerAlgo::layerClusters_to_CaloParticles(const Histograms& hist
       const auto& best_cp_linked =
           std::find_if(std::begin(cPOnLayerMap[best->first]),
                        std::end(cPOnLayerMap[best->first]),
-                       [&lcRef](const std::pair<edm::Ref<reco::CaloClusterCollection>, std::pair<float, float>>& p) {
+                       [&lcRef](const std::pair<edm::Ref<reco::CaloClusterFloatCollection>, std::pair<float, float>>& p) {
                          return p.first == lcRef;
                        });
       if (best_cp_linked ==
@@ -2008,8 +2008,8 @@ void HGVHistoProducerAlgo::layerClusters_to_CaloParticles(const Histograms& hist
 void HGVHistoProducerAlgo::layerClusters_to_SimClusters(
     const Histograms& histograms,
     const int count,
-    edm::Handle<reco::CaloClusterCollection> clusterHandle,
-    const reco::CaloClusterCollection& clusters,
+    edm::Handle<reco::CaloClusterFloatCollection> clusterHandle,
+    const reco::CaloClusterFloatCollection& clusters,
     edm::Handle<std::vector<SimCluster>> simClusterHandle,
     std::vector<SimCluster> const& sC,
     std::vector<size_t> const& sCIndices,
@@ -2035,7 +2035,7 @@ void HGVHistoProducerAlgo::layerClusters_to_SimClusters(
     histograms.h_denom_layercl_in_simcl_eta_perlayer[count].at(lcLayerId)->Fill(clusters[lcId].eta());
     histograms.h_denom_layercl_in_simcl_phi_perlayer[count].at(lcLayerId)->Fill(clusters[lcId].phi());
     //
-    const edm::Ref<reco::CaloClusterCollection> lcRef(clusterHandle, lcId);
+    const edm::Ref<reco::CaloClusterFloatCollection> lcRef(clusterHandle, lcId);
     const auto& scsIt = scsInLayerClusterMap.find(lcRef);
     if (scsIt == scsInLayerClusterMap.end())
       continue;
@@ -2059,7 +2059,7 @@ void HGVHistoProducerAlgo::layerClusters_to_SimClusters(
       auto const& sc_linked =
           std::find_if(std::begin(lcsInSimClusterMap[scPair.first]),
                        std::end(lcsInSimClusterMap[scPair.first]),
-                       [&lcRef](const std::pair<edm::Ref<reco::CaloClusterCollection>, std::pair<float, float>>& p) {
+                       [&lcRef](const std::pair<edm::Ref<reco::CaloClusterFloatCollection>, std::pair<float, float>>& p) {
                          return p.first == lcRef;
                        });
       if (sc_linked ==
@@ -2086,7 +2086,7 @@ void HGVHistoProducerAlgo::layerClusters_to_SimClusters(
       const auto& best_sc_linked =
           std::find_if(std::begin(lcsInSimClusterMap[best->first]),
                        std::end(lcsInSimClusterMap[best->first]),
-                       [&lcRef](const std::pair<edm::Ref<reco::CaloClusterCollection>, std::pair<float, float>>& p) {
+                       [&lcRef](const std::pair<edm::Ref<reco::CaloClusterFloatCollection>, std::pair<float, float>>& p) {
                          return p.first == lcRef;
                        });
       if (best_sc_linked ==
@@ -2187,8 +2187,8 @@ void HGVHistoProducerAlgo::layerClusters_to_SimClusters(
 
 void HGVHistoProducerAlgo::fill_generic_cluster_histos(const Histograms& histograms,
                                                        const int count,
-                                                       edm::Handle<reco::CaloClusterCollection> clusterHandle,
-                                                       const reco::CaloClusterCollection& clusters,
+                                                       edm::Handle<reco::CaloClusterFloatCollection> clusterHandle,
+                                                       const reco::CaloClusterFloatCollection& clusters,
                                                        edm::Handle<std::vector<CaloParticle>> caloParticleHandle,
                                                        std::vector<CaloParticle> const& cP,
                                                        std::vector<size_t> const& cPIndices,
@@ -2673,7 +2673,7 @@ void HGVHistoProducerAlgo::fill_trackster_histos(
     const Histograms& histograms,
     const int count,
     const ticl::TracksterCollection& tracksters,
-    const reco::CaloClusterCollection& layerClusters,
+    const reco::CaloClusterFloatCollection& layerClusters,
     const ticl::TracksterCollection& simTSs,
     const ticl::TracksterCollection& simTSs_fromCP,
     const std::map<unsigned int, std::vector<unsigned int>>& cpToSc_SimTrackstersMap,
@@ -2930,7 +2930,7 @@ void HGVHistoProducerAlgo::setRecHitTools(std::shared_ptr<hgcal::RecHitTools> re
   recHitTools_ = recHitTools;
 }
 
-DetId HGVHistoProducerAlgo::findmaxhit(const reco::CaloCluster& cluster,
+DetId HGVHistoProducerAlgo::findmaxhit(const reco::CaloClusterFloat& cluster,
                                        std::unordered_map<DetId, const unsigned int> const& hitMap,
                                        MultiVectorManager<HGCRecHit> const& hits) const {
   const auto& hits_and_fractions = cluster.hitsAndFractions();

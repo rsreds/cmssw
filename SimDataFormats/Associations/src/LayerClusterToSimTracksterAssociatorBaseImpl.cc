@@ -7,7 +7,7 @@ namespace ticl {
   LayerClusterToSimTracksterAssociatorBaseImpl::~LayerClusterToSimTracksterAssociatorBaseImpl() {}
 
   ticl::RecoToSimTracksterCollection LayerClusterToSimTracksterAssociatorBaseImpl::associateRecoToSim(
-      const edm::Handle<reco::CaloClusterCollection> &cCCH,
+      const edm::Handle<reco::CaloClusterFloatCollection> &cCCH,
       const edm::Handle<ticl::TracksterCollection> &sTCH,
       const edm::Handle<CaloParticleCollection> &cPCH,
       const ticl::RecoToSimCollection &lCToCPs,
@@ -17,7 +17,7 @@ namespace ticl {
   }
 
   ticl::SimTracksterToRecoCollection LayerClusterToSimTracksterAssociatorBaseImpl::associateSimToReco(
-      const edm::Handle<reco::CaloClusterCollection> &cCCH,
+      const edm::Handle<reco::CaloClusterFloatCollection> &cCCH,
       const edm::Handle<ticl::TracksterCollection> &sTCH,
       const edm::Handle<CaloParticleCollection> &cPCH,
       const ticl::SimToRecoCollection &cPToLCs,

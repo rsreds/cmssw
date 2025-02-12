@@ -11,7 +11,7 @@ LCToSimTSAssociatorByEnergyScoreImpl::LCToSimTSAssociatorByEnergyScoreImpl(edm::
     : productGetter_(&productGetter) {}
 
 ticl::RecoToSimTracksterCollection LCToSimTSAssociatorByEnergyScoreImpl::associateRecoToSim(
-    const edm::Handle<reco::CaloClusterCollection>& cCCH,
+    const edm::Handle<reco::CaloClusterFloatCollection>& cCCH,
     const edm::Handle<ticl::TracksterCollection>& sTCH,
     const edm::Handle<CaloParticleCollection>& cPCH,
     const ticl::RecoToSimCollection& lCToCPs,
@@ -22,7 +22,7 @@ ticl::RecoToSimTracksterCollection LCToSimTSAssociatorByEnergyScoreImpl::associa
   const auto simTracksters = *sTCH.product();
 
   for (size_t lcId = 0; lcId < cCCH.product()->size(); ++lcId) {
-    const edm::Ref<reco::CaloClusterCollection> lcRef(cCCH, lcId);
+    const edm::Ref<reco::CaloClusterFloatCollection> lcRef(cCCH, lcId);
     for (size_t tsId = 0; tsId < simTracksters.size(); ++tsId) {
       if (simTracksters[tsId].seedID() == cPCH.id()) {
         const auto& cpIt = lCToCPs.find(lcRef);
@@ -90,7 +90,7 @@ ticl::RecoToSimTracksterCollection LCToSimTSAssociatorByEnergyScoreImpl::associa
 }
 
 ticl::SimTracksterToRecoCollection LCToSimTSAssociatorByEnergyScoreImpl::associateSimToReco(
-    const edm::Handle<reco::CaloClusterCollection>& cCCH,
+    const edm::Handle<reco::CaloClusterFloatCollection>& cCCH,
     const edm::Handle<ticl::TracksterCollection>& sTCH,
     const edm::Handle<CaloParticleCollection>& cPCH,
     const ticl::SimToRecoCollection& cPToLCs,
@@ -112,11 +112,11 @@ ticl::SimTracksterToRecoCollection LCToSimTSAssociatorByEnergyScoreImpl::associa
 
       const auto& lcs = lcIt->val;
       for (size_t lcId = 0; lcId < lcs.size(); ++lcId) {
-        const edm::Ref<reco::CaloClusterCollection> lcRef(cCCH, lcId);
+        const edm::Ref<reco::CaloClusterFloatCollection> lcRef(cCCH, lcId);
         const auto lcPair =
             std::find_if(std::begin(lcs),
                          std::end(lcs),
-                         [&lcRef](const std::pair<edm::Ref<reco::CaloClusterCollection>, std::pair<float, float>>& p) {
+                         [&lcRef](const std::pair<edm::Ref<reco::CaloClusterFloatCollection>, std::pair<float, float>>& p) {
                            return p.first == lcRef;
                          });
         if (lcPair == lcs.end()) {
@@ -147,11 +147,11 @@ ticl::SimTracksterToRecoCollection LCToSimTSAssociatorByEnergyScoreImpl::associa
 
       const auto& lcs = lcIt->val;
       for (size_t lcId = 0; lcId < lcs.size(); ++lcId) {
-        const edm::Ref<reco::CaloClusterCollection> lcRef(cCCH, lcId);
+        const edm::Ref<reco::CaloClusterFloatCollection> lcRef(cCCH, lcId);
         const auto lcPair =
             std::find_if(std::begin(lcs),
                          std::end(lcs),
-                         [&lcRef](const std::pair<edm::Ref<reco::CaloClusterCollection>, std::pair<float, float>>& p) {
+                         [&lcRef](const std::pair<edm::Ref<reco::CaloClusterFloatCollection>, std::pair<float, float>>& p) {
                            return p.first == lcRef;
                          });
         if (lcPair == lcs.end()) {

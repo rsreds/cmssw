@@ -16,6 +16,7 @@
 #include "DataFormats/HGCalReco/interface/HGCalSoAClustersHostCollection.h"
 #include "DataFormats/HGCalReco/interface/HGCalSoARecHitsExtraHostCollection.h"
 #include "DataFormats/HGCalReco/interface/HGCalSoARecHitsHostCollection.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 
 #include "RecoLocalCalo/HGCalRecProducers/interface/ComputeClusterTime.h"
 
@@ -38,15 +39,15 @@ public:
     moduleLabel_ = config.getParameter<std::string>("@module_label");
 #endif
     if (detector_ == "HFNose") {
-      algoId_ = reco::CaloCluster::hfnose;
+      algoId_ = reco::CaloClusterFloat::hfnose;
     } else if (detector_ == "EE") {
-      algoId_ = reco::CaloCluster::hgcal_em;
+      algoId_ = reco::CaloClusterFloat::hgcal_em;
     } else {  //for FH or BH
-      algoId_ = reco::CaloCluster::hgcal_had;
+      algoId_ = reco::CaloClusterFloat::hgcal_had;
     }
 
     produces<std::vector<float>>("InitialLayerClustersMask");
-    produces<std::vector<reco::BasicCluster>>();
+    produces<std::vector<reco::CaloClusterFloat>>();
     produces<edm::ValueMap<std::pair<float, float>>>(timeClname_);
   }
 
@@ -63,7 +64,7 @@ public:
 
     auto const deviceView = deviceData.view();
 
-    std::unique_ptr<std::vector<reco::BasicCluster>> clusters(new std::vector<reco::BasicCluster>);
+    std::unique_ptr<std::vector<reco::CaloClusterFloat>> clusters(new std::vector<reco::CaloClusterFloat>);
     clusters->reserve(deviceData->metadata().size());
 
     // Create a vector of <clusters> locations, where each location holds a
@@ -170,7 +171,7 @@ private:
   std::string detector_;
   unsigned int hitsTime_;
   std::string timeClname_;
-  reco::CaloCluster::AlgoId algoId_;
+  reco::CaloClusterFloat::AlgoId algoId_;
 #if DEBUG_CLUSTERS_ALPAKA
   std::string moduleLabel_;
 #endif

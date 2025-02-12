@@ -15,7 +15,7 @@
 #include "FWCore/Framework/interface/ConsumesCollector.h"
 #include "DataFormats/Common/interface/OrphanHandle.h"
 
-#include "DataFormats/CaloRecHit/interface/CaloCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "DataFormats/HGCalReco/interface/Common.h"
 #include "DataFormats/HGCalReco/interface/MtdHostCollection.h"
 #include "DataFormats/HGCalReco/interface/TICLLayerTile.h"
@@ -80,7 +80,7 @@ private:
   std::vector<edm::EDGetTokenT<std::vector<Trackster>>> general_tracksters_tokens_;
   std::vector<edm::EDGetTokenT<std::vector<std::vector<unsigned>>>> general_tracksterlinks_tokens_;
 
-  const edm::EDGetTokenT<std::vector<reco::CaloCluster>> clusters_token_;
+  const edm::EDGetTokenT<std::vector<reco::CaloClusterFloat>> clusters_token_;
   const edm::EDGetTokenT<edm::ValueMap<std::pair<float, float>>> clustersTime_token_;
 
   std::vector<edm::EDGetTokenT<std::vector<float>>> original_masks_tokens_;
@@ -114,7 +114,7 @@ private:
 };
 
 TICLCandidateProducer::TICLCandidateProducer(const edm::ParameterSet &ps)
-    : clusters_token_(consumes<std::vector<reco::CaloCluster>>(ps.getParameter<edm::InputTag>("layer_clusters"))),
+    : clusters_token_(consumes<std::vector<reco::CaloClusterFloat>>(ps.getParameter<edm::InputTag>("layer_clusters"))),
       clustersTime_token_(
           consumes<edm::ValueMap<std::pair<float, float>>>(ps.getParameter<edm::InputTag>("layer_clustersTime"))),
       tracks_token_(consumes<std::vector<reco::Track>>(ps.getParameter<edm::InputTag>("tracks"))),

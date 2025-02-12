@@ -20,7 +20,7 @@ TSToSimTSHitLCAssociatorByEnergyScoreImpl::TSToSimTSHitLCAssociatorByEnergyScore
 
 ticl::association_t TSToSimTSHitLCAssociatorByEnergyScoreImpl::makeConnections(
     const edm::Handle<ticl::TracksterCollection>& tCH,
-    const edm::Handle<reco::CaloClusterCollection>& lCCH,
+    const edm::Handle<reco::CaloClusterFloatCollection>& lCCH,
     const edm::Handle<SimClusterCollection>& sCCH,
     const edm::Handle<CaloParticleCollection>& cPCH,
     const edm::Handle<ticl::TracksterCollection>& sTCH) const {
@@ -215,7 +215,7 @@ ticl::association_t TSToSimTSHitLCAssociatorByEnergyScoreImpl::makeConnections(
 
 ticl::RecoToSimCollectionSimTracksters TSToSimTSHitLCAssociatorByEnergyScoreImpl::associateRecoToSim(
     const edm::Handle<ticl::TracksterCollection>& tCH,
-    const edm::Handle<reco::CaloClusterCollection>& lCCH,
+    const edm::Handle<reco::CaloClusterFloatCollection>& lCCH,
     const edm::Handle<SimClusterCollection>& sCCH,
     const edm::Handle<CaloParticleCollection>& cPCH,
     const edm::Handle<ticl::TracksterCollection>& sTCH) const {
@@ -243,7 +243,7 @@ ticl::RecoToSimCollectionSimTracksters TSToSimTSHitLCAssociatorByEnergyScoreImpl
 
 ticl::SimToRecoCollectionSimTracksters TSToSimTSHitLCAssociatorByEnergyScoreImpl::associateSimToReco(
     const edm::Handle<ticl::TracksterCollection>& tCH,
-    const edm::Handle<reco::CaloClusterCollection>& lCCH,
+    const edm::Handle<reco::CaloClusterFloatCollection>& lCCH,
     const edm::Handle<SimClusterCollection>& sCCH,
     const edm::Handle<CaloParticleCollection>& cPCH,
     const edm::Handle<ticl::TracksterCollection>& sTCH) const {

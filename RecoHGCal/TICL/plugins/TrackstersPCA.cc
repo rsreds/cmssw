@@ -12,7 +12,7 @@
 #include <functional>
 
 void ticl::assignPCAtoTracksters(std::vector<Trackster> &tracksters,
-                                 const std::vector<reco::CaloCluster> &layerClusters,
+                                 const std::vector<reco::CaloClusterFloat> &layerClusters,
                                  const edm::ValueMap<std::pair<float, float>> &layerClustersTime,
                                  double z_limit_em,
                                  const hgcal::RecHitTools &rhtools,
@@ -33,7 +33,7 @@ void ticl::assignPCAtoTracksters(std::vector<Trackster> &tracksters,
     Eigen::Vector3f filtered_barycenter;
     filtered_barycenter << 0., 0., 0.;
 
-    auto fillPoint = [&](const reco::CaloCluster &c, const float weight = 1.f) {
+    auto fillPoint = [&](const reco::CaloClusterFloat &c, const float weight = 1.f) {
       point[0] = weight * c.x();
       point[1] = weight * c.y();
       point[2] = weight * c.z();
@@ -237,7 +237,7 @@ void ticl::assignPCAtoTracksters(std::vector<Trackster> &tracksters,
 }
 
 std::pair<float, float> ticl::computeLocalTracksterTime(const Trackster &trackster,
-                                                        const std::vector<reco::CaloCluster> &layerClusters,
+                                                        const std::vector<reco::CaloClusterFloat> &layerClusters,
                                                         const edm::ValueMap<std::pair<float, float>> &layerClustersTime,
                                                         const Eigen::Vector3f &barycenter,
                                                         size_t N) {

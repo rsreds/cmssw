@@ -30,7 +30,7 @@ LCToCPAssociatorByEnergyScoreImpl<HIT>::LCToCPAssociatorByEnergyScoreImpl(
 
 template <typename HIT>
 ticl::association LCToCPAssociatorByEnergyScoreImpl<HIT>::makeConnections(
-    const edm::Handle<reco::CaloClusterCollection>& cCCH, const edm::Handle<CaloParticleCollection>& cPCH) const {
+    const edm::Handle<reco::CaloClusterFloatCollection>& cCCH, const edm::Handle<CaloParticleCollection>& cPCH) const {
   // Get collections
   const auto& clusters = *cCCH.product();
   const auto& caloParticles = *cPCH.product();
@@ -497,7 +497,7 @@ ticl::association LCToCPAssociatorByEnergyScoreImpl<HIT>::makeConnections(
 
 template <typename HIT>
 ticl::RecoToSimCollection LCToCPAssociatorByEnergyScoreImpl<HIT>::associateRecoToSim(
-    const edm::Handle<reco::CaloClusterCollection>& cCCH, const edm::Handle<CaloParticleCollection>& cPCH) const {
+    const edm::Handle<reco::CaloClusterFloatCollection>& cCCH, const edm::Handle<CaloParticleCollection>& cPCH) const {
   ticl::RecoToSimCollection returnValue(productGetter_);
   const auto& links = makeConnections(cCCH, cPCH);
 
@@ -507,7 +507,7 @@ ticl::RecoToSimCollection LCToCPAssociatorByEnergyScoreImpl<HIT>::associateRecoT
       LogDebug("LCToCPAssociatorByEnergyScoreImpl")
           << "layerCluster Id: \t" << lcId << "\t CP id: \t" << cpPair.first << "\t score \t" << cpPair.second << "\n";
       // Fill AssociationMap
-      returnValue.insert(edm::Ref<reco::CaloClusterCollection>(cCCH, lcId),  // Ref to LC
+      returnValue.insert(edm::Ref<reco::CaloClusterFloatCollection>(cCCH, lcId),  // Ref to LC
                          std::make_pair(edm::Ref<CaloParticleCollection>(cPCH, cpPair.first),
                                         cpPair.second)  // Pair <Ref to CP, score>
       );
@@ -518,7 +518,7 @@ ticl::RecoToSimCollection LCToCPAssociatorByEnergyScoreImpl<HIT>::associateRecoT
 
 template <typename HIT>
 ticl::SimToRecoCollection LCToCPAssociatorByEnergyScoreImpl<HIT>::associateSimToReco(
-    const edm::Handle<reco::CaloClusterCollection>& cCCH, const edm::Handle<CaloParticleCollection>& cPCH) const {
+    const edm::Handle<reco::CaloClusterFloatCollection>& cCCH, const edm::Handle<CaloParticleCollection>& cPCH) const {
   ticl::SimToRecoCollection returnValue(productGetter_);
   const auto& links = makeConnections(cCCH, cPCH);
   const auto& cPOnLayer = std::get<1>(links);
@@ -527,7 +527,7 @@ ticl::SimToRecoCollection LCToCPAssociatorByEnergyScoreImpl<HIT>::associateSimTo
       for (auto& lcPair : cPOnLayer[cpId][layerId].layerClusterIdToEnergyAndScore) {
         returnValue.insert(
             edm::Ref<CaloParticleCollection>(cPCH, cpId),                              // Ref to CP
-            std::make_pair(edm::Ref<reco::CaloClusterCollection>(cCCH, lcPair.first),  // Pair <Ref to LC,
+            std::make_pair(edm::Ref<reco::CaloClusterFloatCollection>(cCCH, lcPair.first),  // Pair <Ref to LC,
                            std::make_pair(lcPair.second.first, lcPair.second.second))  // pair <energy, score> >
         );
       }

@@ -36,7 +36,7 @@ namespace ticl {
   }
 
   // Method to process input data and prepare it for inference
-  void TracksterInferenceByDNN::inputData(const std::vector<reco::CaloCluster>& layerClusters,
+  void TracksterInferenceByDNN::inputData(const std::vector<reco::CaloClusterFloat>& layerClusters,
                                           std::vector<Trackster>& tracksters) {
     tracksterIndices_.clear();  // Clear previous indices
     for (int i = 0; i < static_cast<int>(tracksters.size()); i++) {
@@ -80,7 +80,7 @@ namespace ticl {
 
       // Fill input data with cluster information
       for (const int& k : clusterIndices) {
-        const reco::CaloCluster& cluster = layerClusters[trackster.vertices(k)];
+        const reco::CaloClusterFloat& cluster = layerClusters[trackster.vertices(k)];
         int j = rhtools_.getLayerWithOffset(cluster.hitsAndFractions()[0].first) - 1;
         if (j < eidNLayers_ && seenClusters[j] < eidNClusters_) {
           auto index = (i * eidNLayers_ + j) * eidNFeatures_ * eidNClusters_ + seenClusters[j] * eidNFeatures_;

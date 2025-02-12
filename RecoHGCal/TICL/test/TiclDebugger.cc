@@ -22,7 +22,7 @@
 
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 
-#include "DataFormats/CaloRecHit/interface/CaloCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "DataFormats/ForwardDetId/interface/HGCalDetId.h"
 #include "DataFormats/HepMCCandidate/interface/GenParticle.h"
 #include "DataFormats/HGCalReco/interface/Trackster.h"
@@ -58,7 +58,7 @@ private:
   edm::EDGetTokenT<std::vector<ticl::Trackster>> trackstersMergeToken_;
   edm::EDGetTokenT<std::vector<reco::Track>> tracksToken_;
   edm::EDGetTokenT<std::vector<CaloParticle>> caloParticlesToken_;
-  edm::EDGetTokenT<std::vector<reco::CaloCluster>> layerClustersToken_;
+  edm::EDGetTokenT<std::vector<reco::CaloClusterFloat>> layerClustersToken_;
 };
 
 TiclDebugger::TiclDebugger(const edm::ParameterSet& iConfig)
@@ -71,7 +71,7 @@ TiclDebugger::TiclDebugger(const edm::ParameterSet& iConfig)
   trackstersMergeToken_ = iC.consumes<std::vector<ticl::Trackster>>(trackstersMerge_);
   tracksToken_ = iC.consumes<std::vector<reco::Track>>(tracks_);
   caloParticlesToken_ = iC.consumes<std::vector<CaloParticle>>(caloParticles_);
-  layerClustersToken_ = iC.consumes<std::vector<reco::CaloCluster>>(layerClusters_);
+  layerClustersToken_ = iC.consumes<std::vector<reco::CaloClusterFloat>>(layerClusters_);
 }
 
 TiclDebugger::~TiclDebugger() {}
@@ -94,7 +94,7 @@ void TiclDebugger::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     return tracksters[i].raw_energy() > tracksters[j].raw_energy();
   });
 
-  edm::Handle<std::vector<reco::CaloCluster>> layerClustersH;
+  edm::Handle<std::vector<reco::CaloClusterFloat>> layerClustersH;
   iEvent.getByToken(layerClustersToken_, layerClustersH);
   auto const& layerClusters = *layerClustersH.product();
 

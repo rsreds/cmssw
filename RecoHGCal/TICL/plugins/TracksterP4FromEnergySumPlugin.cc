@@ -19,10 +19,10 @@ namespace ticl {
     std::tuple<TracksterMomentumPluginBase::LorentzVector, float> calcP4(
         const ticl::Trackster& trackster,
         const reco::Vertex& vertex,
-        const std::vector<reco::CaloCluster>& calo_clusters) const;
+        const std::vector<reco::CaloClusterFloat>& calo_clusters) const;
     bool energy_from_regression_;
     edm::EDGetTokenT<std::vector<reco::Vertex>> vertex_token_;
-    edm::EDGetTokenT<std::vector<reco::CaloCluster>> layer_clusters_token_;
+    edm::EDGetTokenT<std::vector<reco::CaloClusterFloat>> layer_clusters_token_;
   };
 
   TracksterP4FromEnergySum::TracksterP4FromEnergySum(const edm::ParameterSet& ps, edm::ConsumesCollector&& ic)
@@ -30,7 +30,7 @@ namespace ticl {
         energy_from_regression_(ps.getParameter<bool>("energyFromRegression")),
         vertex_token_(ic.consumes<std::vector<reco::Vertex>>(ps.getParameter<edm::InputTag>("vertices"))),
         layer_clusters_token_(
-            ic.consumes<std::vector<reco::CaloCluster>>(ps.getParameter<edm::InputTag>("layerClusters"))) {}
+            ic.consumes<std::vector<reco::CaloClusterFloat>>(ps.getParameter<edm::InputTag>("layerClusters"))) {}
 
   void TracksterP4FromEnergySum::setP4(const std::vector<const Trackster*>& tracksters,
                                        std::vector<TICLCandidate>& ticl_cands,
@@ -47,7 +47,7 @@ namespace ticl {
       }
     }
 
-    edm::Handle<std::vector<reco::CaloCluster>> layer_clusters_h;
+    edm::Handle<std::vector<reco::CaloClusterFloat>> layer_clusters_h;
     event.getByToken(layer_clusters_token_, layer_clusters_h);
 
     auto size = std::min(tracksters.size(), ticl_cands.size());
@@ -64,7 +64,7 @@ namespace ticl {
   std::tuple<TracksterMomentumPluginBase::LorentzVector, float> TracksterP4FromEnergySum::calcP4(
       const ticl::Trackster& trackster,
       const reco::Vertex& vertex,
-      const std::vector<reco::CaloCluster>& calo_clusters) const {
+      const std::vector<reco::CaloClusterFloat>& calo_clusters) const {
     std::array<double, 3> barycentre{{0., 0., 0.}};
     double energy = 0.;
     size_t counter = 0;

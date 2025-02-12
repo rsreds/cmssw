@@ -13,7 +13,7 @@
 #include "DataFormats/Common/interface/Handle.h"
 #include "DataFormats/Common/interface/AssociationMap.h"
 #include "DataFormats/HGCalReco/interface/Trackster.h"
-#include "DataFormats/CaloRecHit/interface/CaloClusterFwd.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 
 #include "SimDataFormats/CaloAnalysis/interface/SimClusterFwd.h"
 
@@ -34,12 +34,12 @@ namespace ticl {
 
     /// Associate a Trackster to SimClusters
     virtual ticl::RecoToSimCollectionTracksters associateRecoToSim(const edm::Handle<ticl::TracksterCollection> &tCH,
-                                                                   const edm::Handle<reco::CaloClusterCollection> &lCCH,
+                                                                   const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
                                                                    const edm::Handle<SimClusterCollection> &sCCH) const;
 
     /// Associate a SimCluster to Tracksters
     virtual ticl::SimToRecoCollectionTracksters associateSimToReco(const edm::Handle<ticl::TracksterCollection> &tCH,
-                                                                   const edm::Handle<reco::CaloClusterCollection> &lCCH,
+                                                                   const edm::Handle<reco::CaloClusterFloatCollection> &lCCH,
                                                                    const edm::Handle<SimClusterCollection> &sCCH) const;
   };
 }  // namespace ticl

@@ -126,7 +126,7 @@ HGCalValidator::HGCalValidator(const edm::ParameterSet& pset)
 
   simClusters_ = consumes<std::vector<SimCluster>>(pset.getParameter<edm::InputTag>("label_scl"));
 
-  layerclusters_ = consumes<reco::CaloClusterCollection>(label_lcl);
+  layerclusters_ = consumes<reco::CaloClusterFloatCollection>(label_lcl);
   for (const auto& tag : allTracksterTracksterAssociatorsLabels_) {
     tracksterToTracksterAssociatorsTokens_.emplace_back(consumes<TracksterToTracksterMap>(tag));
   }
@@ -442,9 +442,9 @@ void HGCalValidator::dqmAnalyze(const edm::Event& event,
   std::vector<SimCluster> const& simClusters = *simClustersHandle;
 
   //Layer clusters
-  edm::Handle<reco::CaloClusterCollection> clusterHandle;
+  edm::Handle<reco::CaloClusterFloatCollection> clusterHandle;
   event.getByToken(layerclusters_, clusterHandle);
-  const reco::CaloClusterCollection& clusters = *clusterHandle;
+  const reco::CaloClusterFloatCollection& clusters = *clusterHandle;
 
   std::vector<edm::Handle<TracksterToTracksterMap>> tracksterToTracksterMapsHandles;
   for (auto& token : tracksterToTracksterAssociatorsTokens_) {

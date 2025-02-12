@@ -14,7 +14,7 @@ namespace edm {
   class ParameterSet;
 }
 namespace reco {
-  class CaloCluster;
+  class CaloClusterFloat;
 }
 
 namespace ticl {
@@ -23,7 +23,7 @@ namespace ticl {
     explicit ClusterFilterBase(const edm::ParameterSet&) {}
     virtual ~ClusterFilterBase() {}
 
-    virtual void filter(const std::vector<reco::CaloCluster>& layerClusters,
+    virtual void filter(const std::vector<reco::CaloClusterFloat>& layerClusters,
                         std::vector<float>& layerClustersMask,
                         hgcal::RecHitTools& rhtools) const = 0;
   };

@@ -134,7 +134,7 @@ void HGCalCLUEAlgoT<T, STRATEGY>::makeClusters() {
 }
 
 template <typename T, typename STRATEGY>
-std::vector<reco::BasicCluster> HGCalCLUEAlgoT<T, STRATEGY>::getClusters(bool) {
+std::vector<reco::CaloClusterFloat> HGCalCLUEAlgoT<T, STRATEGY>::getClusters(bool) {
   std::vector<int> offsets(numberOfClustersPerLayer_.size(), 0);
 
   int maxClustersOnLayer = numberOfClustersPerLayer_[0];
@@ -227,7 +227,7 @@ std::vector<reco::BasicCluster> HGCalCLUEAlgoT<T, STRATEGY>::getClusters(bool) {
       auto globalClusterIndex = cellsOnLayer.clusterIndex[cl[0]] + firstClusterIdx;
 
       clusters_v_[globalClusterIndex] =
-          reco::BasicCluster(energy, position, reco::CaloID::DET_HGCAL_ENDCAP, thisCluster, algoId_);
+          reco::CaloClusterFloat(energy, position, reco::CaloID::DET_HGCAL_ENDCAP, thisCluster, algoId_);
       clusters_v_[globalClusterIndex].setSeed(seedDetId);
       thisCluster.clear();
     }

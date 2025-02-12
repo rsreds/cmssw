@@ -7,7 +7,7 @@
 #include "DataFormats/EgammaReco/interface/SuperCluster.h"
 #include "FWCore/ParameterSet/interface/ConfigurationDescriptions.h"
 #include "FWCore/ParameterSet/interface/ParameterSetDescription.h"
-#include "DataFormats/CaloRecHit/interface/CaloCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "DataFormats/CaloRecHit/interface/CaloClusterFwd.h"
 #include "DataFormats/EgammaReco/interface/SuperCluster.h"
 #include "DataFormats/EgammaReco/interface/SuperClusterFwd.h"
@@ -54,7 +54,7 @@ private:
   std::vector<PCAAssocMap> pcaAssocMaps_;
   const edm::EDGetTokenT<reco::RecoEcalCandidateCollection> recoEcalCandidateToken_;
   const edm::EDGetTokenT<reco::PFRecHitCollection> hgcalRecHitToken_;
-  const edm::EDGetTokenT<reco::CaloClusterCollection> layerClusterToken_;
+  const edm::EDGetTokenT<reco::CaloClusterFloatCollection> layerClusterToken_;
   HGCalShowerShapeHelper ssHelper_;
 };
 
@@ -64,7 +64,7 @@ EgammaHLTHGCalIDVarProducer::EgammaHLTHGCalIDVarProducer(const edm::ParameterSet
       recoEcalCandidateToken_(
           consumes<reco::RecoEcalCandidateCollection>(config.getParameter<edm::InputTag>("recoEcalCandidateProducer"))),
       hgcalRecHitToken_(consumes<reco::PFRecHitCollection>(config.getParameter<edm::InputTag>("hgcalRecHits"))),
-      layerClusterToken_(consumes<reco::CaloClusterCollection>(config.getParameter<edm::InputTag>("layerClusters"))),
+      layerClusterToken_(consumes<reco::CaloClusterFloatCollection>(config.getParameter<edm::InputTag>("layerClusters"))),
       ssHelper_(consumesCollector()) {
   pcaAssocMaps_.emplace_back(PCAAssocMap(&HGCalShowerShapeHelper::ShowerWidths::sigma2xx, "sigma2xx"));
   pcaAssocMaps_.emplace_back(PCAAssocMap(&HGCalShowerShapeHelper::ShowerWidths::sigma2yy, "sigma2yy"));

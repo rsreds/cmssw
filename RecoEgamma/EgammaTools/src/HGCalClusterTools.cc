@@ -1,12 +1,12 @@
 #include "RecoEgamma/EgammaTools/interface/HGCalClusterTools.h"
 
-#include "DataFormats/CaloRecHit/interface/CaloCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "DataFormats/Math/interface/deltaR.h"
 #include "DataFormats/Math/interface/deltaPhi.h"
 
 float HGCalClusterTools::energyInCone(const float eta,
                                       const float phi,
-                                      const std::vector<reco::CaloCluster>& layerClusters,
+                                      const std::vector<reco::CaloClusterFloat>& layerClusters,
                                       const float minDR,
                                       const float maxDR,
                                       const float minEt,

@@ -18,7 +18,7 @@ public:
     filter_on_iterations_ = conf.getParameter<std::vector<int> >("filter_on_iterations");
 
     tracksterToken_ = cc.consumes<std::vector<ticl::Trackster> >(conf.getParameter<edm::InputTag>("tracksterSrc"));
-    clusterToken_ = cc.consumes<reco::CaloClusterCollection>(conf.getParameter<edm::InputTag>("clusterSrc"));
+    clusterToken_ = cc.consumes<reco::CaloClusterFloatCollection>(conf.getParameter<edm::InputTag>("clusterSrc"));
   }
 
   ~PFClusterFromHGCalTrackster() override {}
@@ -43,8 +43,8 @@ private:
   edm::EDGetTokenT<std::vector<ticl::Trackster> > tracksterToken_;
   edm::Handle<std::vector<ticl::Trackster> > trackstersH_;
 
-  edm::EDGetTokenT<reco::CaloClusterCollection> clusterToken_;
-  edm::Handle<reco::CaloClusterCollection> clusterH_;
+  edm::EDGetTokenT<reco::CaloClusterFloatCollection> clusterToken_;
+  edm::Handle<reco::CaloClusterFloatCollection> clusterH_;
 };
 
 DEFINE_EDM_PLUGIN(InitialClusteringStepFactory, PFClusterFromHGCalTrackster, "PFClusterFromHGCalTrackster");

@@ -32,6 +32,8 @@
 #include "DataFormats/CaloRecHit/interface/CaloCluster.h"
 #include "DataFormats/CaloRecHit/interface/CaloClusterFwd.h"
 
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
+
 #include "RecoEgamma/EgammaTools/interface/HGCalClusterTools.h"
 
 template <typename T1>
@@ -49,7 +51,7 @@ public:
 
 private:
   edm::EDGetTokenT<T1Collection> recoCandidateProducer_;
-  const edm::EDGetTokenT<reco::CaloClusterCollection> layerClusterProducer_;
+  const edm::EDGetTokenT<reco::CaloClusterFloatCollection> layerClusterProducer_;
   const edm::EDGetTokenT<double> rhoProducer_;
 
   const double drMax_;
@@ -69,7 +71,7 @@ private:
 template <typename T1>
 HLTHGCalLayerClusterIsolationProducer<T1>::HLTHGCalLayerClusterIsolationProducer(const edm::ParameterSet& config)
     : layerClusterProducer_(
-          consumes<reco::CaloClusterCollection>(config.getParameter<edm::InputTag>("layerClusterProducer"))),
+          consumes<reco::CaloClusterFloatCollection>(config.getParameter<edm::InputTag>("layerClusterProducer"))),
       rhoProducer_(consumes<double>(config.getParameter<edm::InputTag>("rhoProducer"))),
       drMax_(config.getParameter<double>("drMax")),
       drVetoEM_(config.getParameter<double>("drVetoEM")),
@@ -139,12 +141,12 @@ void HLTHGCalLayerClusterIsolationProducer<T1>::produce(edm::Event& iEvent, cons
   rho = rho * rhoScale_;
 
   edm::Handle<T1Collection> recoCandHandle;
-  edm::Handle<reco::CaloClusterCollection> clusterHandle;
+  edm::Handle<reco::CaloClusterFloatCollection> clusterHandle;
 
   iEvent.getByToken(recoCandidateProducer_, recoCandHandle);
   iEvent.getByToken(layerClusterProducer_, clusterHandle);
 
-  const std::vector<reco::CaloCluster> layerClusters = *(clusterHandle.product());
+  const std::vector<reco::CaloClusterFloat> layerClusters = *(clusterHandle.product());
 
   T1IsolationMap recoCandMap(recoCandHandle);
   T1IsolationMap recoCandMapEm(recoCandHandle);

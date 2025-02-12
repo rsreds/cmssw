@@ -24,7 +24,7 @@ public:
   explicit LCToSimTSAssociatorByEnergyScoreImpl(edm::EDProductGetter const &);
 
   ticl::RecoToSimTracksterCollection associateRecoToSim(
-      const edm::Handle<reco::CaloClusterCollection> &cCH,
+      const edm::Handle<reco::CaloClusterFloatCollection> &cCH,
       const edm::Handle<ticl::TracksterCollection> &sTCH,
       const edm::Handle<CaloParticleCollection> &cPCH,
       const ticl::RecoToSimCollection &lCToCPs,
@@ -32,7 +32,7 @@ public:
       const ticl::RecoToSimCollectionWithSimClusters &lCToSCs) const override;
 
   ticl::SimTracksterToRecoCollection associateSimToReco(
-      const edm::Handle<reco::CaloClusterCollection> &cCH,
+      const edm::Handle<reco::CaloClusterFloatCollection> &cCH,
       const edm::Handle<ticl::TracksterCollection> &sTCH,
       const edm::Handle<CaloParticleCollection> &cPCH,
       const ticl::SimToRecoCollection &cPToLCs,

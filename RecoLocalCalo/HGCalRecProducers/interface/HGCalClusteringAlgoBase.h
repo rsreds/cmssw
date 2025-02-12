@@ -6,7 +6,7 @@
 
 #include "DataFormats/HGCRecHit/interface/HGCRecHitCollections.h"
 #include "DataFormats/Math/interface/Point3D.h"
-#include "DataFormats/EgammaReco/interface/BasicCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 
 #include "RecoLocalCalo/HGCalRecAlgos/interface/RecHitTools.h"
 
@@ -49,12 +49,12 @@ class HGCalClusteringAlgoBase {
 public:
   enum VerbosityLevel { pDEBUG = 0, pWARNING = 1, pINFO = 2, pERROR = 3 };
 
-  HGCalClusteringAlgoBase(VerbosityLevel v, reco::CaloCluster::AlgoId algo) : verbosity_(v), algoId_(algo) {}
+  HGCalClusteringAlgoBase(VerbosityLevel v, reco::CaloClusterFloat::AlgoId algo) : verbosity_(v), algoId_(algo) {}
   virtual ~HGCalClusteringAlgoBase() {}
 
   virtual void populate(const HGCRecHitCollection &hits) = 0;
   virtual void makeClusters() = 0;
-  virtual std::vector<reco::BasicCluster> getClusters(bool) = 0;
+  virtual std::vector<reco::CaloClusterFloat> getClusters(bool) = 0;
   virtual void reset() = 0;
   virtual hgcal_clustering::Density getDensity() { return {}; };        //implementation is in some child class
   virtual void getEventSetupPerAlgorithm(const edm::EventSetup &es) {}  //implementation is in some child class
@@ -69,7 +69,7 @@ public:
     getEventSetupPerAlgorithm(es);
   }
   inline void setVerbosity(VerbosityLevel the_verbosity) { verbosity_ = the_verbosity; }
-  inline void setAlgoId(reco::CaloCluster::AlgoId algo, bool isNose = false) {
+  inline void setAlgoId(reco::CaloClusterFloat::AlgoId algo, bool isNose = false) {
     algoId_ = algo;
     isNose_ = isNose;
   }
@@ -88,12 +88,12 @@ protected:
   VerbosityLevel verbosity_;
 
   // The vector of clusters
-  std::vector<reco::BasicCluster> clusters_v_;
+  std::vector<reco::CaloClusterFloat> clusters_v_;
 
   hgcal::RecHitTools rhtools_;
 
   // The algo id
-  reco::CaloCluster::AlgoId algoId_;
+  reco::CaloClusterFloat::AlgoId algoId_;
 
   edm::ESGetToken<CaloGeometry, CaloGeometryRecord> caloGeomToken_;
 };

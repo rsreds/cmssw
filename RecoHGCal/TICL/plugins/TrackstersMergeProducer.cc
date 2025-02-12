@@ -11,7 +11,7 @@
 #include "FWCore/ParameterSet/interface/ParameterSetDescription.h"
 #include "FWCore/Framework/interface/ConsumesCollector.h"
 
-#include "DataFormats/CaloRecHit/interface/CaloCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "DataFormats/HGCalReco/interface/Common.h"
 #include "DataFormats/HGCalReco/interface/TICLLayerTile.h"
 #include "DataFormats/HGCalReco/interface/Trackster.h"
@@ -72,7 +72,7 @@ private:
 
   void fillTile(TICLTracksterTiles &, const std::vector<Trackster> &, TracksterIterIndex);
 
-  void energyRegressionAndID(const std::vector<reco::CaloCluster> &layerClusters,
+  void energyRegressionAndID(const std::vector<reco::CaloClusterFloat> &layerClusters,
                              const tensorflow::Session *,
                              std::vector<Trackster> &result) const;
   void printTrackstersDebug(const std::vector<Trackster> &, const char *label) const;
@@ -82,7 +82,7 @@ private:
   std::unique_ptr<LinkingAlgoBase> linkingAlgo_;
 
   const edm::EDGetTokenT<std::vector<Trackster>> tracksters_clue3d_token_;
-  const edm::EDGetTokenT<std::vector<reco::CaloCluster>> clusters_token_;
+  const edm::EDGetTokenT<std::vector<reco::CaloClusterFloat>> clusters_token_;
   const edm::EDGetTokenT<edm::ValueMap<std::pair<float, float>>> clustersTime_token_;
   const edm::EDGetTokenT<std::vector<reco::Track>> tracks_token_;
   edm::EDGetTokenT<edm::ValueMap<float>> tracks_time_token_;
@@ -139,7 +139,7 @@ private:
 
 TrackstersMergeProducer::TrackstersMergeProducer(const edm::ParameterSet &ps)
     : tracksters_clue3d_token_(consumes<std::vector<Trackster>>(ps.getParameter<edm::InputTag>("trackstersclue3d"))),
-      clusters_token_(consumes<std::vector<reco::CaloCluster>>(ps.getParameter<edm::InputTag>("layer_clusters"))),
+      clusters_token_(consumes<std::vector<reco::CaloClusterFloat>>(ps.getParameter<edm::InputTag>("layer_clusters"))),
       clustersTime_token_(
           consumes<edm::ValueMap<std::pair<float, float>>>(ps.getParameter<edm::InputTag>("layer_clustersTime"))),
       tracks_token_(consumes<std::vector<reco::Track>>(ps.getParameter<edm::InputTag>("tracks"))),
@@ -421,7 +421,7 @@ void TrackstersMergeProducer::produce(edm::Event &evt, const edm::EventSetup &es
   evt.put(std::move(resultCandidates));
 }
 
-void TrackstersMergeProducer::energyRegressionAndID(const std::vector<reco::CaloCluster> &layerClusters,
+void TrackstersMergeProducer::energyRegressionAndID(const std::vector<reco::CaloClusterFloat> &layerClusters,
                                                     const tensorflow::Session *eidSession,
                                                     std::vector<Trackster> &tracksters) const {
   // Energy regression and particle identification strategy:
@@ -493,7 +493,7 @@ void TrackstersMergeProducer::energyRegressionAndID(const std::vector<reco::Calo
     // loop through clusters by descending energy
     for (const int &k : clusterIndices) {
       // get features per layer and cluster and store the values directly in the input tensor
-      const reco::CaloCluster &cluster = layerClusters[trackster.vertices(k)];
+      const reco::CaloClusterFloat &cluster = layerClusters[trackster.vertices(k)];
       int j = rhtools_.getLayerWithOffset(cluster.hitsAndFractions()[0].first) - 1;
       if (j < eidNLayers_ && seenClusters[j] < eidNClusters_) {
         // get the pointer to the first feature value for the current batch, layer and cluster

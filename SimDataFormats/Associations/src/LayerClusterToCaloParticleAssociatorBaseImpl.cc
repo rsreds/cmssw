@@ -7,12 +7,12 @@ namespace ticl {
   LayerClusterToCaloParticleAssociatorBaseImpl::~LayerClusterToCaloParticleAssociatorBaseImpl() {}
 
   ticl::RecoToSimCollection LayerClusterToCaloParticleAssociatorBaseImpl::associateRecoToSim(
-      const edm::Handle<reco::CaloClusterCollection> &cCCH, const edm::Handle<CaloParticleCollection> &cPCH) const {
+      const edm::Handle<reco::CaloClusterFloatCollection> &cCCH, const edm::Handle<CaloParticleCollection> &cPCH) const {
     return ticl::RecoToSimCollection();
   }
 
   ticl::SimToRecoCollection LayerClusterToCaloParticleAssociatorBaseImpl::associateSimToReco(
-      const edm::Handle<reco::CaloClusterCollection> &cCCH, const edm::Handle<CaloParticleCollection> &cPCH) const {
+      const edm::Handle<reco::CaloClusterFloatCollection> &cCCH, const edm::Handle<CaloParticleCollection> &cPCH) const {
     return ticl::SimToRecoCollection();
   }
 

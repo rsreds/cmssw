@@ -5,22 +5,22 @@
 #include <limits>
 
 #include "DataFormats/Common/interface/PtrVector.h"
-#include "DataFormats/EgammaReco/interface/BasicCluster.h"
+#include "DataFormats/CaloRecHit/interface/CaloClusterFloat.h"
 #include "DataFormats/ParticleFlowReco/interface/PFCluster.h"
 
 namespace reco {
   class HGCalMultiCluster : public reco::PFCluster {
   public:
-    typedef edm::PtrVector<reco::BasicCluster>::const_iterator component_iterator;
-    typedef edm::PtrVector<reco::BasicCluster> ClusterCollection;
+    typedef edm::PtrVector<reco::CaloClusterFloat>::const_iterator component_iterator;
+    typedef edm::PtrVector<reco::CaloClusterFloat> ClusterCollection;
 
     HGCalMultiCluster() : PFCluster() { this->setLayer(PFLayer::HGCAL); }
 
     HGCalMultiCluster(double energy, double x, double y, double z, ClusterCollection& thecls);
 
-    void push_back(const edm::Ptr<reco::BasicCluster>& b) { myclusters.push_back(b); }
+    void push_back(const edm::Ptr<reco::CaloClusterFloat>& b) { myclusters.push_back(b); }
 
-    const edm::PtrVector<reco::BasicCluster>& clusters() const { return myclusters; }
+    const edm::PtrVector<reco::CaloClusterFloat>& clusters() const { return myclusters; }
 
     unsigned int size() const { return myclusters.size(); }
     component_iterator begin() const { return myclusters.begin(); }
@@ -29,7 +29,7 @@ namespace reco {
     bool operator>(const HGCalMultiCluster& rhs) const { return (energy() > rhs.energy()); }
 
   private:
-    edm::PtrVector<reco::BasicCluster> myclusters;
+    edm::PtrVector<reco::CaloClusterFloat> myclusters;
   };
 
   typedef std::vector<HGCalMultiCluster> HGCalMultiClusterCollection;

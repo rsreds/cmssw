@@ -18,7 +18,7 @@ TSToSimTSAssociatorByEnergyScoreImpl::TSToSimTSAssociatorByEnergyScoreImpl(
 
 ticl::association TSToSimTSAssociatorByEnergyScoreImpl::makeConnections(
     const edm::Handle<ticl::TracksterCollection>& tCH,
-    const edm::Handle<reco::CaloClusterCollection>& lCCH,
+    const edm::Handle<reco::CaloClusterFloatCollection>& lCCH,
     const edm::Handle<ticl::TracksterCollection>& sTCH) const {
   // Get collections
   const auto& tracksters = *tCH.product();
@@ -442,7 +442,7 @@ ticl::association TSToSimTSAssociatorByEnergyScoreImpl::makeConnections(
 
 ticl::RecoToSimCollectionSimTracksters TSToSimTSAssociatorByEnergyScoreImpl::associateRecoToSim(
     const edm::Handle<ticl::TracksterCollection>& tCH,
-    const edm::Handle<reco::CaloClusterCollection>& lCCH,
+    const edm::Handle<reco::CaloClusterFloatCollection>& lCCH,
     const edm::Handle<ticl::TracksterCollection>& sTCH) const {
   ticl::RecoToSimCollectionSimTracksters returnValue(productGetter_);
   const auto& links = makeConnections(tCH, lCCH, sTCH);
@@ -465,7 +465,7 @@ ticl::RecoToSimCollectionSimTracksters TSToSimTSAssociatorByEnergyScoreImpl::ass
 
 ticl::SimToRecoCollectionSimTracksters TSToSimTSAssociatorByEnergyScoreImpl::associateSimToReco(
     const edm::Handle<ticl::TracksterCollection>& tCH,
-    const edm::Handle<reco::CaloClusterCollection>& lCCH,
+    const edm::Handle<reco::CaloClusterFloatCollection>& lCCH,
     const edm::Handle<ticl::TracksterCollection>& sTCH) const {
   ticl::SimToRecoCollectionSimTracksters returnValue(productGetter_);
   const auto& links = makeConnections(tCH, lCCH, sTCH);
