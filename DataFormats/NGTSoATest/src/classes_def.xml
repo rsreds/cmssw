@@ -1,0 +1,60 @@
+<lcgdict>
+  <class name="PhysicsObj" />
+  <class name="PhysicsObjCollection"/>
+  <class name="edm::Wrapper<PhysicsObjCollection>"/>
+  <class name="PhysicsObj2" />
+  <class name="PhysicsObj2Collection"/>
+  <class name="edm::Wrapper<PhysicsObj2Collection>"/>
+  <class name="PhysicsObj3" />
+  <class name="PhysicsObj3Collection"/>
+  <class name="edm::Wrapper<PhysicsObj3Collection>"/>
+  <class name="PhysicsObj4" />
+  <class name="PhysicsObj4Collection"/>
+  <class name="edm::Wrapper<PhysicsObj4Collection>"/>
+  <class name="PhysicsObj5" />
+  <class name="PhysicsObj5Collection"/>
+  <class name="edm::Wrapper<PhysicsObj5Collection>"/>
+  <class name="PhysicsObj6" />
+  <class name="PhysicsObj6Collection"/>
+  <class name="edm::Wrapper<PhysicsObj6Collection>"/>
+  
+  <class name="SimplePhysicsObj" />
+  <class name="edm::Wrapper<SimplePhysicsObj>"/>
+  <class name="std::vector<SimplePhysicsObj>" />
+  <class name="edm::Wrapper<std::vector<SimplePhysicsObj>>"/>
+  <class name="SimplePhysicsObj2" />
+  <class name="edm::Wrapper<SimplePhysicsObj2>"/>
+  <class name="std::vector<SimplePhysicsObj2>" />
+  <class name="edm::Wrapper<std::vector<SimplePhysicsObj2>>"/>
+  <class name="SimplePhysicsObj3" />
+  <class name="edm::Wrapper<SimplePhysicsObj3>"/>
+  <class name="std::vector<SimplePhysicsObj3>" />
+  <class name="edm::Wrapper<std::vector<SimplePhysicsObj3>>"/>
+  <class name="SimplePhysicsObj4" />
+  <class name="edm::Wrapper<SimplePhysicsObj4>"/>
+  <class name="std::vector<SimplePhysicsObj4>" />
+  <class name="edm::Wrapper<std::vector<SimplePhysicsObj4>>"/>
+  <class name="SimplePhysicsObj5" />
+  <class name="edm::Wrapper<SimplePhysicsObj5>"/>
+  <class name="std::vector<SimplePhysicsObj5>" />
+  <class name="edm::Wrapper<std::vector<SimplePhysicsObj5>>"/>
+  <class name="SimplePhysicsObj6" />
+  <class name="edm::Wrapper<SimplePhysicsObj6>"/>
+  <class name="std::vector<SimplePhysicsObj6>" />
+  <class name="edm::Wrapper<std::vector<SimplePhysicsObj6>>"/>
+
+  <class name="SimpleSoAPhysicsObj" />
+  <class name="edm::Wrapper<SimpleSoAPhysicsObj>"/>
+  <class name="SimpleSoAPhysicsObj2" />
+  <class name="edm::Wrapper<SimpleSoAPhysicsObj2>"/>
+  <class name="SimpleSoAPhysicsObj3" />
+  <class name="edm::Wrapper<SimpleSoAPhysicsObj3>"/>
+  <class name="SimpleSoAPhysicsObj4" />
+  <class name="edm::Wrapper<SimpleSoAPhysicsObj4>"/>
+  <class name="SimpleSoAPhysicsObj5" />
+  <class name="edm::Wrapper<SimpleSoAPhysicsObj5>"/>
+  <class name="SimpleSoAPhysicsObj6" />
+  <class name="edm::Wrapper<SimpleSoAPhysicsObj6>"/>
+  
+
+</lcgdict>
