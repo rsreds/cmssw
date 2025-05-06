@@ -143,13 +143,13 @@ void SoARandomProducer::produce(edm::StreamID iID, edm::Event& event, const edm:
     SoAviewFFF.y()[i] = static_cast<float>(y);
     SoAviewFFF.z()[i] = static_cast<float>(z);
 
-    SoAviewSDF.x()[i] = static_cast<short>(x * 32767);
+    SoAviewSDF.x()[i] = static_cast<short>(x * 10922);
     SoAviewSDF.y()[i] = y;
     SoAviewSDF.z()[i] = static_cast<float>(z);
 
-    SoAviewIII.x()[i] = static_cast<int>(x * 2147483647);
-    SoAviewIII.y()[i] = static_cast<int>(y * 2147483647);
-    SoAviewIII.z()[i] = static_cast<int>(z * 2147483647);
+    SoAviewIII.x()[i] = static_cast<int>(x * 715827882);
+    SoAviewIII.y()[i] = static_cast<int>(y * 715827882);
+    SoAviewIII.z()[i] = static_cast<int>(z * 715827882);
 
     SoAviewConvertDDD.x()[i] = static_cast<double>(static_cast<float>(x));
     SoAviewConvertDDD.y()[i] = static_cast<double>(static_cast<float>(y));
@@ -172,13 +172,13 @@ void SoARandomProducer::produce(edm::StreamID iID, edm::Event& event, const edm:
     (*AoSProductFFF)[i].y = static_cast<float>(y);
     (*AoSProductFFF)[i].z = static_cast<float>(z);
 
-    (*AoSProductSDF)[i].x = static_cast<short>(x * 32767);
+    (*AoSProductSDF)[i].x = static_cast<short>(x * 10922);
     (*AoSProductSDF)[i].y = y;
     (*AoSProductSDF)[i].z = static_cast<float>(z);
 
-    (*AoSProductIII)[i].x = static_cast<int>(x * 2147483647);
-    (*AoSProductIII)[i].y = static_cast<int>(y * 2147483647);
-    (*AoSProductIII)[i].z = static_cast<int>(z * 2147483647);
+    (*AoSProductIII)[i].x = static_cast<int>(x * 715827882);
+    (*AoSProductIII)[i].y = static_cast<int>(y * 715827882);
+    (*AoSProductIII)[i].z = static_cast<int>(z * 715827882);
 
     (*AoSProductConvertDDD)[i].x = static_cast<double>(static_cast<float>(x));
     (*AoSProductConvertDDD)[i].y = static_cast<double>(static_cast<float>(y));
@@ -202,13 +202,13 @@ void SoARandomProducer::produce(edm::StreamID iID, edm::Event& event, const edm:
     SimpleSoAProductFFF->y.push_back(static_cast<float>(y));
     SimpleSoAProductFFF->z.push_back(static_cast<float>(z));
 
-    SimpleSoAProductSDF->x.push_back(static_cast<short>(x * 32767));
+    SimpleSoAProductSDF->x.push_back(static_cast<short>(x * 10922));
     SimpleSoAProductSDF->y.push_back(y);
     SimpleSoAProductSDF->z.push_back(static_cast<float>(z));
 
-    SimpleSoAProductIII->x.push_back(static_cast<int>(x * 2147483647));
-    SimpleSoAProductIII->y.push_back(static_cast<int>(y * 2147483647));
-    SimpleSoAProductIII->z.push_back(static_cast<int>(z * 2147483647));
+    SimpleSoAProductIII->x.push_back(static_cast<int>(x * 715827882));
+    SimpleSoAProductIII->y.push_back(static_cast<int>(y * 715827882));
+    SimpleSoAProductIII->z.push_back(static_cast<int>(z * 715827882));
 
     SimpleSoAProductConvertDDD->x.push_back(static_cast<double>(static_cast<float>(x)));
     SimpleSoAProductConvertDDD->y.push_back(static_cast<double>(static_cast<float>(y)));
@@ -217,8 +217,8 @@ void SoARandomProducer::produce(edm::StreamID iID, edm::Event& event, const edm:
     // Fill the split variables
     (*vdouble)[i] = x;
     (*vfloat)[i] = static_cast<float>(x);
-    (*vint)[i] = static_cast<int>(x * 2147483647);
-    (*vshort)[i] = static_cast<short>(x * 32767);
+    (*vint)[i] = static_cast<int>(x * 715827882);
+    (*vshort)[i] = static_cast<short>(x * 10922);
   }
 
   // Put the product in the event
