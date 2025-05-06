@@ -67,7 +67,7 @@ DEFINE_FWK_MODULE(SoAIntegersProducer);
 
 // Method to produce
 void SoAIntegersProducer::produce(edm::StreamID iID, edm::Event& event, const edm::EventSetup& iSetup) const {
-  size_t elems = 1000000;
+  size_t elems = 100000;
 
   // SoA producer ddd input
   auto SoAProductDDD = std::make_unique<PhysicsObjCollection>(elems, cms::alpakatools::host());
