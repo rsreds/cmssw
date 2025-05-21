@@ -42,6 +42,9 @@ namespace {
     if (iName == "ZLIB") {
       return edm::rntuple::CompressionAlgos::kZLIB;
     }
+    if (iName == "uncompressed") {
+      return edm::rntuple::CompressionAlgos::uncompressed;
+    }
     throw cms::Exception("UnknownCompression") << "An unknown compression algorithm was specified: " << iName;
   }
 

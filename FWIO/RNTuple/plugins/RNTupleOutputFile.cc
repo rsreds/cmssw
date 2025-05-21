@@ -33,20 +33,28 @@
 #include <map>
 
 namespace {
-  ROOT::RCompressionSetting::EAlgorithm::EValues convert(edm::rntuple::CompressionAlgos iAlgos) {
+  void setRNTupleCompression(ROOT::RNTupleWriteOptions& iWriteOptions,
+    edm::rntuple::CompressionAlgos iAlgo,
+    int iLevel) {
     using namespace edm::rntuple;
     using namespace ROOT;
-    switch (iAlgos) {
+    switch (iAlgo) {
       case CompressionAlgos::kLZMA:
-        return RCompressionSetting::EAlgorithm::kLZMA;
+        iWriteOptions.SetCompression(RCompressionSetting::EAlgorithm::kLZMA, iLevel);
+        break;
       case CompressionAlgos::kZSTD:
-        return RCompressionSetting::EAlgorithm::kZSTD;
+        iWriteOptions.SetCompression(RCompressionSetting::EAlgorithm::kZSTD, iLevel);
+        break;
       case CompressionAlgos::kZLIB:
-        return RCompressionSetting::EAlgorithm::kZLIB;
+        iWriteOptions.SetCompression(RCompressionSetting::EAlgorithm::kZLIB, iLevel);
+        break;
       case CompressionAlgos::kLZ4:
-        return RCompressionSetting::EAlgorithm::kLZ4;
+        iWriteOptions.SetCompression(RCompressionSetting::EAlgorithm::kLZ4, iLevel);
+        break;
+      case CompressionAlgos::uncompressed:
+        iWriteOptions.SetCompression(0);
+        break;
     }
-    return RCompressionSetting::EAlgorithm::kZSTD;
   }
 }  // namespace
 
@@ -198,7 +206,7 @@ explicitly pass the correct variable to `SetColumnRepresentatives`).
       auto model = setupCommonModels(iProducts, "RunAuxiliary", "edm::RunAuxiliary");
 
       auto writeOptions = ROOT::RNTupleWriteOptions();
-      writeOptions.SetCompression(convert(iConfig.compressionAlgo), iConfig.compressionLevel);
+      setRNTupleCompression(writeOptions, iConfig.compressionAlgo, iConfig.compressionLevel);
       runs_ = ROOT::RNTupleWriter::Append(std::move(model), "Runs", file_, writeOptions);
     }
     products_[InRun] = associateDataProducts(iProducts, runs_->GetModel());
@@ -210,7 +218,7 @@ explicitly pass the correct variable to `SetColumnRepresentatives`).
       auto model = setupCommonModels(iProducts, "LuminosityBlockAuxiliary", "edm::LuminosityBlockAuxiliary");
 
       auto writeOptions = ROOT::RNTupleWriteOptions();
-      writeOptions.SetCompression(convert(iConfig.compressionAlgo), iConfig.compressionLevel);
+      setRNTupleCompression(writeOptions, iConfig.compressionAlgo, iConfig.compressionLevel);
       lumis_ = ROOT::RNTupleWriter::Append(std::move(model), "LuminosityBlocks", file_, writeOptions);
     }
     products_[InLumi] = associateDataProducts(iProducts, lumis_->GetModel());
@@ -244,7 +252,7 @@ explicitly pass the correct variable to `SetColumnRepresentatives`).
       setupDataProducts(iProducts, iConfig.streamerProduct, iConfig.doNotSplitSubFields, *model);
 
       auto writeOptions = ROOT::RNTupleWriteOptions();
-      writeOptions.SetCompression(convert(iConfig.compressionAlgo), iConfig.compressionLevel);
+      setRNTupleCompression(writeOptions, iConfig.compressionAlgo, iConfig.compressionLevel);
       writeOptions.SetApproxZippedClusterSize(iConfig.approxZippedClusterSize);
       writeOptions.SetMaxUnzippedClusterSize(iConfig.maxUnzippedClusterSize);
       writeOptions.SetInitialUnzippedPageSize(iConfig.initialUnzippedPageSize);
@@ -274,7 +282,7 @@ explicitly pass the correct variable to `SetColumnRepresentatives`).
       model->AddField(std::move(field));
     }
     auto writeOptions = ROOT::RNTupleWriteOptions();
-    writeOptions.SetCompression(convert(iConfig.compressionAlgo), iConfig.compressionLevel);
+    setRNTupleCompression(writeOptions, iConfig.compressionAlgo, iConfig.compressionLevel);
     parameterSets_ = ROOT::RNTupleWriter::Append(std::move(model), "ParameterSets", file_, writeOptions);
   }
 
@@ -299,7 +307,7 @@ explicitly pass the correct variable to `SetColumnRepresentatives`).
       model->AddField(std::move(field));
     }
     auto writeOptions = ROOT::RNTupleWriteOptions();
-    writeOptions.SetCompression(convert(iConfig.compressionAlgo), iConfig.compressionLevel);
+    setRNTupleCompression(writeOptions, iConfig.compressionAlgo, iConfig.compressionLevel);
     parentage_ = ROOT::RNTupleWriter::Append(std::move(model), "Parentage", file_, writeOptions);
   }
   void RNTupleOutputFile::fillParentage() {
@@ -362,7 +370,7 @@ explicitly pass the correct variable to `SetColumnRepresentatives`).
     }
 
     auto writeOptions = ROOT::RNTupleWriteOptions();
-    writeOptions.SetCompression(convert(iConfig.compressionAlgo), iConfig.compressionLevel);
+    setRNTupleCompression(writeOptions, iConfig.compressionAlgo, iConfig.compressionLevel);
     metaData_ = ROOT::RNTupleWriter::Append(std::move(model), "MetaData", file_, writeOptions);
   }
 
