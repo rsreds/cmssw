@@ -12,11 +12,11 @@ namespace {
     InfoDump(std::string iOut) : dump_(std::move(iOut)) {}
 
     std::optional<std::string_view> nextLine();
-    std::optional<std::pair<std::string_view, unsigned long long>> nextFieldInfo();
+    std::optional<std::tuple<std::string_view, unsigned long long, unsigned long long>> nextFieldInfo();
     void moveToStartOfFields();
     void moveToLineWith(std::string_view);
-
-  private:
+    
+    private:
     std::string dump_;
     std::string::size_type start_ = 0;
   };
@@ -42,7 +42,7 @@ namespace {
     return;
   }
 
-  std::optional<std::pair<std::string_view, unsigned long long>> InfoDump::nextFieldInfo() {
+  std::optional<std::tuple<std::string_view, unsigned long long, unsigned long long>> InfoDump::nextFieldInfo() {
     auto line = nextLine();
     if (not line) {
       return {};
@@ -56,8 +56,11 @@ namespace {
     line = nextLine();
     //std::cout <<line->substr(line->find_first_not_of(" ",line->find_first_of(":")+1))<<std::endl;
     auto size = std::atoll(line->substr(line->find_first_not_of(" ", line->find_first_of(":") + 1)).data());
+    line = nextLine();
+    auto compression = std::atof(line->substr(line->find_first_not_of(" ", line->find_first_of(":") + 1)).data());
     moveToLineWith("............................................................");
-    return std::make_pair(name, size);
+    unsigned long long uncompressedSize = size * compression;
+    return std::make_tuple(name, size, uncompressedSize);
   }
 
   void InfoDump::moveToLineWith(std::string_view iCheck) {
@@ -77,14 +80,17 @@ int main(int iArgc, char const* iArgv[]) {
 
   boost::program_options::options_description desc("Allowed options");
   desc.add_options()("help,h", "print help message")(
-      "file,f", boost::program_options::value<std::string>(), "data file")("print,P", "Print list of data products")(
-      "verbose,v", "Verbose printout")("printProductDetails,p", "Call PrintInfo() for selected rntuple")(
+      "file,f", boost::program_options::value<std::string>(), "data file")(
+      "print,P", "Print list of data products")(
+      "verbose,v", "Verbose printout")(
+      "printProductDetails,p", "Call PrintInfo() for selected rntuple")(
       "rntuple,r", boost::program_options::value<std::string>(), "Select rntuple used with -P and -p options")(
       "sizeSummary,s", "Print size on disk for each data product")(
-      "events,e",
+      "events,e", 
       "Print list of all Events, Runs, and LuminosityBlocks in the file sorted by run number, luminosity block number, "
       "and event number.  Also prints the entry numbers and whether it is possible to use fast copy with the file.")(
-      "eventsInLumis", "Print how many Events are in each LuminosityBlock.");
+      "eventsInLumis", "Print how many Events are in each LuminosityBlock.")(
+      "perEventSize", "Print the average size per Event in the file.");
 
   // What rntuples do we require for this to be a valid collection?
   std::vector<std::string> expectedRNTuples;
@@ -140,25 +146,43 @@ int main(int iArgc, char const* iArgv[]) {
 
   InfoDump info{s.str()};
 
+  info.nextLine();
+  info.nextLine();
+  info.nextLine();
+  info.nextLine();
+  unsigned long num_events = std::atol(info.nextLine()->substr(info.nextLine()->find_first_not_of(" ", info.nextLine()->find_first_of(":") + 1)).data());
+
   info.moveToStartOfFields();
 
   std::string presentField;
-  unsigned long long size = 0;
+  unsigned long long size = 0ULL;
+  unsigned long long uncompressedSize = 0ULL;
   auto field = info.nextFieldInfo();
+  std::cout << "Field Size UncompressedSize" << std::endl;
   while (field) {
-    if (field->first == presentField) {
-      size += field->second;
+    if (std::get<0>(*field) == presentField) {
+      size += std::get<1>(*field);
+      uncompressedSize += std::get<2>(*field);
     } else {
       if (not presentField.empty()) {
-        std::cout << presentField << " " << size << std::endl;
+        if (vm.count("perEventSize")) {
+          size /= num_events;
+          uncompressedSize /= num_events;
+        }
+        std::cout << presentField << " " << size << " " << uncompressedSize << std::endl;
       }
-      presentField = field->first;
+      presentField = std::get<0>(*field);
       size = 0;
+      uncompressedSize = 0;
     }
     field = info.nextFieldInfo();
-  }
+}
   if (not presentField.empty()) {
-    std::cout << presentField << " " << size << std::endl;
+    if (vm.count("perEventSize")) {
+      size /= num_events;
+      uncompressedSize /= num_events;
+    }
+    std::cout << presentField << " " << size << " " << uncompressedSize <<std::endl;
   }
 
   return 0;
