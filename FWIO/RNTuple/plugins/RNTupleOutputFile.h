@@ -31,7 +31,7 @@
 
 namespace edm {
   namespace rntuple {
-    enum class CompressionAlgos { kLZMA, kZSTD, kZLIB, kLZ4 };
+    enum class CompressionAlgos { kLZMA, kZSTD, kZLIB, kLZ4, uncompressed };
   }
 
   class RNTupleOutputFile {
