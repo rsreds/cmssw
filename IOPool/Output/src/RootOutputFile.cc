@@ -132,6 +132,8 @@ namespace edm {
       filePtr_->SetCompressionAlgorithm(ROOT::RCompressionSetting::EAlgorithm::kZSTD);
     } else if (om_->compressionAlgorithm() == std::string("LZ4")) {
       filePtr_->SetCompressionAlgorithm(ROOT::RCompressionSetting::EAlgorithm::kLZ4);
+    } else if (om_->compressionAlgorithm() == std::string("uncompressed")) {
+      filePtr_->SetCompressionSettings(0);
     } else {
       throw Exception(errors::Configuration)
           << "PoolOutputModule configured with unknown compression algorithm '" << om_->compressionAlgorithm() << "'\n"
