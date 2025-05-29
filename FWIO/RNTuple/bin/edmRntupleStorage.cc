@@ -158,7 +158,10 @@ int main(int iArgc, char const* iArgv[]) {
   unsigned long long size = 0ULL;
   unsigned long long uncompressedSize = 0ULL;
   auto field = info.nextFieldInfo();
-  std::cout << "Field Size UncompressedSize" << std::endl;
+  if (vm.count("perEventSize")) {
+   std::cout << "Branch Name | Average Uncompressed Size (Bytes/Event) | Average Compressed Size (Bytes/Event)" << std::endl;
+  }
+  std::cout << "Branch Name | Uncompressed Size | Compressed Size" << std::endl;
   while (field) {
     if (std::get<0>(*field) == presentField) {
       size += std::get<1>(*field);
@@ -169,7 +172,7 @@ int main(int iArgc, char const* iArgv[]) {
           size /= num_events;
           uncompressedSize /= num_events;
         }
-        std::cout << presentField << " " << size << " " << uncompressedSize << std::endl;
+        std::cout << presentField<< " " << uncompressedSize  << " " << size << std::endl;
       }
       presentField = std::get<0>(*field);
       size = 0;
@@ -182,7 +185,7 @@ int main(int iArgc, char const* iArgv[]) {
       size /= num_events;
       uncompressedSize /= num_events;
     }
-    std::cout << presentField << " " << size << " " << uncompressedSize <<std::endl;
+    std::cout << presentField << " " << uncompressedSize  << " " << size <<std::endl;
   }
 
   return 0;
